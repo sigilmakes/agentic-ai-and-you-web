@@ -89,16 +89,31 @@ function scaleDeck() {
 window.addEventListener("resize", scaleDeck);
 scaleDeck();
 
+// Complexity stack: apply rotations from data-rot once on load.
+document.querySelectorAll(".complexity-layer[data-rot]").forEach(el => {
+  el.style.transform = `rotate(${el.dataset.rot}deg)`;
+});
+
 const slides = Array.from(document.querySelectorAll(".slide"));
 let slideIndex = 0;
 let stepIndex = 0;
 
 function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
 
+function stepNumber(s, i) {
+  const n = Number.parseInt(s.dataset.step, 10);
+  return Number.isNaN(n) ? i + 1 : n;
+}
+
+function stepCountFor(steps) {
+  const nums = steps.map(stepNumber);
+  return nums.length ? Math.max(...nums) : 0;
+}
+
 function applySteps(slide) {
   const steps = Array.from(slide.querySelectorAll(".step"));
-  steps.forEach((s, i) => s.classList.toggle("hidden", i >= stepIndex));
-  return steps.length;
+  steps.forEach((s, i) => s.classList.toggle("hidden", stepNumber(s, i) > stepIndex));
+  return stepCountFor(steps);
 }
 
 function showSlide(index, shouldUpdateHash = true) {
@@ -127,7 +142,8 @@ function syncFromHash() {
 
 function next(shouldUpdateHash = true) {
   const steps = Array.from(slides[slideIndex].querySelectorAll(".step"));
-  if (stepIndex < steps.length) {
+  const count = stepCountFor(steps);
+  if (stepIndex < count) {
     stepIndex += 1;
     applySteps(slides[slideIndex]);
     if (shouldUpdateHash) updateHash();
@@ -147,7 +163,7 @@ function prev(shouldUpdateHash = true) {
   }
   slideIndex = clamp(slideIndex - 1, 0, slides.length - 1);
   const steps = Array.from(slides[slideIndex].querySelectorAll(".step"));
-  stepIndex = steps.length;
+  stepIndex = stepCountFor(steps);
   showSlide(slideIndex, shouldUpdateHash);
 }
 

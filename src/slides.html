@@ -52,19 +52,28 @@
       <section class="slide" data-slide="4">
         <div class="frame frame-wide">
           <h2>What is an agent?</h2>
-          <div class="image-row cols-3">
-            <div class="image-wrap">
-              <div class="image-cell"><img src="images/slide-4-img-24.png" alt="" /></div>
-              <span class="label">An LLM (ChatGPT, Claude etc)</span>
+          <div class="agent-flowchart">
+            <div class="flow-row">
+              <div class="flow-node image-node step hidden" data-step="1">
+                <img src="images/slide-4-img-24.png" alt="" />
+                <span class="flow-label">An LLM (ChatGPT, Claude etc)</span>
+              </div>
+              <div class="flow-node image-node step hidden" data-step="2">
+                <img src="images/slide-4-img-25.png" alt="" />
+                <span class="flow-label">“Tools” (Bash, File I/O, Search etc)</span>
+              </div>
             </div>
-            <div class="image-wrap">
-              <div class="image-cell"><img src="images/slide-4-img-25.png" alt="" /></div>
-              <span class="label">“Tools” (Bash, File I/O, Search etc)</span>
-            </div>
-            <div class="box">
-              <p style="font-size: 30px; text-align: center; margin-bottom: 16px;">
-                Start with goal<br/>→ Think + Use tools<br/>→ Goal achieved?<br/>→ Stop<br/><em>and a loop!</em>
-              </p>
+            <div class="step hidden" data-step="3">
+              <div class="flow-path">
+                <div class="flow-step">Start with goal</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">Think + Use tools</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step query">Goal achieved?</div>
+                <div class="flow-arrow down">↓</div>
+                <div class="flow-step stop">Stop</div>
+              </div>
+              <div class="flow-loop">and a loop!</div>
             </div>
           </div>
         </div>
@@ -72,17 +81,17 @@
 
       <!-- SLIDE 5 -->
       <section class="slide" data-slide="5">
-        <div class="frame">
+        <div class="frame frame-wide">
           <h2>What can agents help with?</h2>
           <p class="big-text" style="margin-top: 18px; color: var(--accent);">Basically everything!</p>
-          <ul class="dense">
-            <li>Writing and debugging code</li>
-            <li>Running simulations</li>
-            <li>Doing research</li>
-            <li>Performing statistical analysis</li>
-            <li>Consolidating and summarising information</li>
-            <li>Coordinating with others</li>
-            <li>...dealing with paperwork</li>
+          <ul class="dense two-col-bullets">
+            <li class="step hidden">Writing and debugging code</li>
+            <li class="step hidden">Running simulations</li>
+            <li class="step hidden">Doing research</li>
+            <li class="step hidden">Performing statistical analysis</li>
+            <li class="step hidden">Consolidating and summarising information</li>
+            <li class="step hidden">Coordinating with others</li>
+            <li class="step hidden">...dealing with paperwork</li>
           </ul>
         </div>
       </section>
@@ -92,7 +101,7 @@
         <div class="frame center">
           <h2>Vibe coding….</h2>
           <div class="slide-insert-wrap">
-            <img src="images/slide-6-img-40.png" alt="" class="slide-content-image" />
+            <img src="images/slide-6-img-40.png" alt="" class="slide-content-image" style="max-height: 620px;" />
           </div>
         </div>
       </section>
@@ -101,7 +110,7 @@
       <section class="slide" data-slide="7">
         <div class="frame frame-wide center">
           <h2>Software development is getting weird</h2>
-          <div class="logo-strip">
+          <div class="logo-strip logo-strip-large">
             <div class="logo-cell"><img src="images/slide-7-img-42.png" alt="" /></div>
             <div class="logo-cell"><img src="images/slide-7-img-43.png" alt="" /></div>
             <div class="logo-cell"><img src="images/slide-7-img-44.png" alt="" /></div>
@@ -134,7 +143,7 @@
         <div class="frame center">
           <h2>Some statistics - METR</h2>
           <div class="slide-insert-wrap">
-            <img src="images/slide-9-img-52.png" alt="" class="slide-content-image" />
+            <img src="images/slide-9-img-52.png" alt="" class="slide-content-image" style="max-height: 680px;" />
           </div>
         </div>
       </section>
@@ -144,7 +153,7 @@
         <div class="frame center">
           <h2 style="max-width: 1200px;">In early 2025, METR reported AI tools largely slowed people down?</h2>
           <div class="slide-insert-wrap">
-            <img src="images/slide-10-img-54.png" alt="" class="slide-content-image" />
+            <img src="images/slide-10-img-54.png" alt="" class="slide-content-image" style="max-height: 580px;" />
           </div>
         </div>
       </section>
@@ -154,7 +163,7 @@
         <div class="frame center">
           <h2>Then those results were declared outdated this year...</h2>
           <div class="slide-insert-wrap">
-            <img src="images/slide-11-img-56.png" alt="" class="slide-content-image" />
+            <img src="images/slide-11-img-56.png" alt="" class="slide-content-image" style="max-height: 620px;" />
           </div>
         </div>
       </section>
@@ -202,15 +211,15 @@
           <div class="panel">
             <h2>Personal Experience</h2>
             <ul class="dense">
-              <li>When I joined in 2024, I was staunchly anti-AI</li>
-              <li>Eventually, I relented in 2025 when I had to port a horrific piece of “scientist code” to GPUs</li>
-              <li>Carried on from there, trying to use tools mindfully</li>
-              <li>Since December 2025, I haven’t written a single line of code and have spent almost all my time designing AI agents</li>
-              <li>It’s been a weird flip</li>
+              <li class="step hidden" data-step="1">When I joined in 2024, I was staunchly anti-AI</li>
+              <li class="step hidden" data-step="2">Eventually, I relented in 2025 when I had to port a horrific piece of “scientist code” to GPUs</li>
+              <li class="step hidden" data-step="3">Carried on from there, trying to use tools mindfully</li>
+              <li class="step hidden" data-step="4">Since December 2025, I haven’t written a single line of code and have spent almost all my time designing AI agents</li>
+              <li class="step hidden" data-step="5">It’s been a weird flip</li>
             </ul>
           </div>
           <div class="panel center">
-            <img src="images/slide-15-img-72.png" alt="" class="panel-image" />
+            <img src="images/slide-15-img-72.png" alt="" class="panel-image step hidden" data-step="2" />
           </div>
         </div>
       </section>
@@ -226,16 +235,16 @@
 
       <!-- SLIDE 17 -->
       <section class="slide" data-slide="17">
-        <div class="frame">
+        <div class="frame frame-wide">
           <h2>Raise your hand if you know the following:</h2>
-          <ul class="compact">
-            <li>How to write a python script?</li>
-            <li>How to use git?</li>
-            <li>How to write GPU kernels?</li>
-            <li>How the Haber process works?</li>
-            <li>What AdS/CFT correspondence is and why it matters?</li>
-            <li>How to design an mRNA vaccine to fight against a global pandemic?</li>
-            <li>How to calculate magnetic susceptibility bandstructures using ab-initio methods?</li>
+          <ul class="compact two-col-bullets">
+            <li class="step hidden">How to write a python script?</li>
+            <li class="step hidden">How to use git?</li>
+            <li class="step hidden">How to write GPU kernels?</li>
+            <li class="step hidden">How the Haber process works?</li>
+            <li class="step hidden">What AdS/CFT correspondence is and why it matters?</li>
+            <li class="step hidden">How to design an mRNA vaccine to fight against a global pandemic?</li>
+            <li class="step hidden">How to calculate magnetic susceptibility bandstructures using ab-initio methods?</li>
           </ul>
         </div>
       </section>
@@ -246,13 +255,13 @@
           <div class="panel">
             <h2>Accessibility and specialisation in frontier science</h2>
             <div class="quote quote-large" style="margin-top: 24px;">
-              <p>“Science has provided the swiftest communication between individuals”</p>
-              <p style="margin-top: 24px;">“There is a growing mountain of research. But there is increased evidence that we are being bogged down today as specialization extends”</p>
-              <p style="margin-top: 24px; color: var(--accent);">— Vannevar Bush, 1945</p>
+              <p class="step hidden" data-step="1">“Science has provided the swiftest communication between individuals”</p>
+              <p class="step hidden" data-step="2" style="margin-top: 24px;">“There is a growing mountain of research. But there is increased evidence that we are being bogged down today as specialization extends”</p>
+              <p class="step hidden" data-step="3" style="margin-top: 24px; color: var(--accent);">— Vannevar Bush, 1945</p>
             </div>
           </div>
           <div class="panel center">
-            <img src="images/slide-18-img-79.png" alt="" class="panel-image" />
+            <img src="images/slide-18-img-79.png" alt="" class="panel-image step hidden" data-step="3" />
           </div>
         </div>
       </section>
@@ -273,20 +282,14 @@
       <section class="slide" data-slide="20">
         <div class="frame frame-wide center">
           <h2>Computers: Intelligence Augmentation</h2>
-          <div class="image-row cols-3">
-            <div class="image-wrap">
-              <div class="image-cell"><img src="images/slide-20-img-87.png" alt="" /></div>
-              <span class="label">Jean Bartik</span>
-            </div>
+          <div class="image-row cols-2">
             <div class="image-wrap">
               <div class="image-cell"><img src="images/slide-20-img-88.png" alt="" /></div>
-              <span class="label">Frances Spence</span>
+              <span class="label">Jean Bartik &amp; Frances Spence</span>
             </div>
             <div class="image-wrap">
-              <div class="image-cell" style="background: rgba(232, 155, 95, 0.08); border: 1px solid rgba(232, 155, 95, 0.25);">
-                <span class="label" style="font-size: 32px; color: var(--accent);">Douglas Engelbart</span>
-              </div>
-              <span class="label">&nbsp;</span>
+              <div class="image-cell"><img src="images/slide-20-img-87.png" alt="" /></div>
+              <span class="label">Douglas Engelbart</span>
             </div>
           </div>
         </div>
@@ -305,7 +308,9 @@
             </ul>
           </div>
           <div class="panel center">
-            <img src="images/slide-21-img-97.png" alt="" class="panel-image" />
+            <div class="glow-panel">
+              <img src="images/slide-21-img-97.png" alt="" class="panel-image" />
+            </div>
           </div>
         </div>
       </section>
@@ -314,11 +319,11 @@
       <section class="slide" data-slide="22">
         <div class="frame frame-wide center">
           <h2>But the world keeps getting more complex...</h2>
-          <div class="image-row cols-4">
-            <div class="image-cell"><img src="images/slide-22-img-99.png" alt="" /></div>
-            <div class="image-cell"><img src="images/slide-22-img-100.png" alt="" /></div>
-            <div class="image-cell"><img src="images/slide-22-img-101.png" alt="" /></div>
-            <div class="image-cell"><img src="images/slide-22-img-102.png" alt="" /></div>
+          <div class="complexity-stack">
+            <img src="images/slide-22-img-99.png" alt="" class="complexity-layer step hidden" data-rot="-6" />
+            <img src="images/slide-22-img-100.png" alt="" class="complexity-layer step hidden" data-rot="12" />
+            <img src="images/slide-22-img-101.png" alt="" class="complexity-layer step hidden" data-rot="-10" />
+            <img src="images/slide-22-img-102.png" alt="" class="complexity-layer step hidden" data-rot="7" />
           </div>
         </div>
       </section>
@@ -361,7 +366,7 @@
           <h2>Software Development</h2>
           <p class="subtitle">Feels like this:</p>
           <div class="slide-insert-wrap">
-            <img src="images/slide-26-img-116.png" alt="" class="slide-content-image" />
+            <img src="images/slide-26-img-116.png" alt="" class="slide-content-image" style="max-height: 620px;" />
           </div>
         </div>
       </section>
@@ -371,10 +376,10 @@
         <div class="frame">
           <h2>It’s never been easier...</h2>
           <ul class="dense">
-            <li>To make software!</li>
-            <li>To make software with less experience!</li>
-            <li>To <em>think</em> you made software with less experience…</li>
-            <li>To spam open-source projects with broken code...</li>
+            <li class="step hidden" data-step="1">To make software!</li>
+            <li class="step hidden" data-step="2">To make software with less experience!</li>
+            <li class="step hidden" data-step="3">To <em>think</em> you made software with less experience…</li>
+            <li class="step hidden" data-step="4">To spam open-source projects with broken code...</li>
           </ul>
         </div>
       </section>
@@ -386,11 +391,11 @@
             <h2>Personal Experience - Myself</h2>
             <ul class="dense">
               <li>At this point, I don’t write any code</li>
-              <li>It’s fun, and I’m a better engineer for it!</li>
-              <li>It’s also been a really good learning tool, because I still make effort to learn.</li>
-              <li>But this all only works because I know how software development works</li>
-              <li>Software was so easy for AI to “automate” because software is verifiable.</li>
-              <li>This is not “a normal jump in abstraction”</li>
+              <li class="step hidden" data-step="1">It’s fun, and I’m a better engineer for it!</li>
+              <li class="step hidden" data-step="2">It’s also been a really good learning tool, because I still make effort to learn.</li>
+              <li class="step hidden" data-step="3">But this all only works because I know how software development works</li>
+              <li class="step hidden" data-step="4">Software was so easy for AI to “automate” because software is verifiable.</li>
+              <li class="step hidden" data-step="5">This is not “a normal jump in abstraction”</li>
             </ul>
           </div>
           <div class="panel center">
@@ -405,13 +410,14 @@
           <div class="panel">
             <h2>Teamwork</h2>
             <ul class="dense">
-              <li>AI reduces barriers for collaboration</li>
-              <li>Makes it easier to centralise, share and standardise information</li>
+              <li class="step hidden" data-step="1">AI reduces barriers for collaboration</li>
+              <li class="step hidden" data-step="2">Makes it easier to centralise, share and standardise information</li>
+              <li class="step hidden" data-step="3">New team members can get up to speed faster with an agent that knows the project history</li>
             </ul>
-            <p class="caption" style="margin-top: 40px;">Obligatory “stock photo with watermark spam”</p>
           </div>
-          <div class="panel center">
+          <div class="panel center image-with-caption">
             <img src="images/slide-29-img-124.png" alt="" class="panel-image" />
+            <p class="caption image-caption-overlay">Obligatory “stock photo with watermark spam”</p>
           </div>
         </div>
       </section>
@@ -422,13 +428,13 @@
           <div class="panel">
             <h2>Slop Cannons</h2>
             <ul class="dense">
-              <li>Rolling out AI tools with no training is terrible</li>
-              <li>It’s too easy to trust AI if you don’t understand what it’s done</li>
-              <li>Laziness with AI is infinitely worse than laziness without AI</li>
+              <li class="step hidden" data-step="1">Rolling out AI tools with no training is terrible</li>
+              <li class="step hidden" data-step="2">It’s too easy to trust AI if you don’t understand what it’s done</li>
+              <li class="step hidden" data-step="3">Laziness with AI is infinitely worse than laziness without AI</li>
             </ul>
           </div>
           <div class="panel center">
-            <img src="images/slide-30-img-128.png" alt="" class="panel-image" />
+            <img src="images/slide-30-img-128.png" alt="" class="panel-image step hidden" data-step="3" />
           </div>
         </div>
       </section>
@@ -445,11 +451,11 @@
         <div class="frame">
           <h2>Some closing thoughts</h2>
           <ul class="dense">
-            <li>Agentic AI is one of the most powerful tools we have for breaking through complexity, and the limits really are your imagination.</li>
-            <li>But blindly trusting AI does <em>not</em> work, and is a real danger</li>
-            <li>This problem isn’t solved by ignoring AI</li>
-            <li>Even if AI could “do everything” it would still be more important to learn how things work</li>
-            <li>Expertise from other people outside your discipline is <em>vital</em></li>
+            <li class="step hidden" data-step="1">Agentic AI is one of the most powerful tools we have for breaking through complexity, and the limits really are your imagination.</li>
+            <li class="step hidden" data-step="2">But blindly trusting AI does <em>not</em> work, and is a real danger</li>
+            <li class="step hidden" data-step="3">This problem isn’t solved by ignoring AI</li>
+            <li class="step hidden" data-step="4">Even if AI could “do everything” it would still be more important to learn how things work</li>
+            <li class="step hidden" data-step="5">Expertise from other people outside your discipline is <em>vital</em></li>
           </ul>
         </div>
       </section>

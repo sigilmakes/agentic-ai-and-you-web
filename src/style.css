@@ -45,12 +45,11 @@ body { font-family: var(--serif-font); }
     /* very faint warm/cool ambient glows */
     radial-gradient(circle at 50% 0%, rgba(232, 155, 95, 0.035), transparent 26%),
     radial-gradient(circle at 80% 80%, rgba(61, 139, 142, 0.03), transparent 22%),
-    /* heavy vignette to keep focus on the slide */
-    radial-gradient(circle at center, transparent 45%, rgba(0, 0, 0, 0.55) 100%),
+    /* stronger center vignette so text stays crisp over the busy background */
+    radial-gradient(circle at center, rgba(0, 0, 0, 0.28) 0%, rgba(0, 0, 0, 0.10) 38%, transparent 55%),
+    radial-gradient(circle at center, transparent 42%, rgba(0, 0, 0, 0.62) 100%),
     /* top-to-bottom darkening */
-    linear-gradient(180deg, rgba(15, 10, 6, 0.42), rgba(15, 10, 6, 0.58) 50%, rgba(15, 10, 6, 0.82) 100%),
-    /* retro scanlines */
-    repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0, 0, 0, 0.14) 3px, rgba(0, 0, 0, 0.14) 4px);
+    linear-gradient(180deg, rgba(15, 10, 6, 0.46), rgba(15, 10, 6, 0.62) 50%, rgba(15, 10, 6, 0.86) 100%);
   z-index: 1;
 }
 
@@ -79,6 +78,7 @@ body { font-family: var(--serif-font); }
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--soft);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.65);
 }
 
 .slide {
@@ -101,6 +101,11 @@ body { font-family: var(--serif-font); }
 .center { justify-items: center; text-align: center; margin-inline: auto; }
 
 h1, h2, h3, p, ul, li { margin: 0; }
+
+h1, h2, h3, p, li {
+  /* subtle text shadow to keep text legible over bright background motion */
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55), 0 1px 4px rgba(0, 0, 0, 0.35);
+}
 
 h1 {
   font-family: var(--serif-font);
@@ -154,24 +159,62 @@ li { margin: 14px 0; }
 }
 
 .eyebrow {
-  margin-bottom: 26px;
-  font-size: 22px;
+  margin-bottom: 18px;
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent-strong);
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.65);
 }
 
 .subtitle {
-  margin-top: 28px;
-  font-size: 22px;
+  margin-top: 34px;
+  font-size: 26px;
+  font-weight: 500;
   line-height: 1.5;
   color: var(--muted);
   text-transform: uppercase;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55);
+}
+
+.title-slide .frame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+}
+
+.title-slide .eyebrow {
+  order: 1;
+  margin: 0;
+  font-size: 62px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent-strong);
+  text-shadow: 0 4px 28px rgba(0, 0, 0, 0.70);
 }
 
 .title-slide h1 {
+  order: 2;
   font-style: italic;
   font-weight: 500;
-  max-width: 1200px;
+  max-width: 1100px;
+  font-size: 88px;
+  line-height: 1.0;
+  margin: 0;
+  text-align: center;
+}
+
+.title-slide .subtitle {
+  order: 3;
+  margin: 8px 0 0;
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: var(--soft);
 }
 
 .big-text {
@@ -264,7 +307,7 @@ li { margin: 14px 0; }
   width: auto;
   max-width: min(100%, 1720px);
   height: auto;
-  max-height: clamp(560px, 78vh, 840px);
+  max-height: clamp(640px, 84vh, 900px);
   object-fit: contain;
   border-radius: 14px;
   margin-inline: auto;
@@ -304,8 +347,8 @@ li { margin: 14px 0; }
 .image-row .box {
   width: 100%;
   height: 100%;
-  min-height: 220px;
-  max-height: 440px;
+  min-height: 260px;
+  max-height: 540px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -353,20 +396,24 @@ li { margin: 14px 0; }
 .three-boxes {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
-  margin-top: 40px;
+  gap: 40px;
+  margin-top: 50px;
+  align-items: stretch;
 }
 
 .box {
   background: rgba(232, 155, 95, 0.08);
   border: 1px solid rgba(232, 155, 95, 0.25);
   border-radius: 16px;
-  padding: 28px;
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .box p {
-  font-size: 32px;
-  line-height: 1.25;
+  font-size: 36px;
+  line-height: 1.28;
   color: var(--text);
 }
 
@@ -374,23 +421,23 @@ li { margin: 14px 0; }
 .logo-strip {
   display: flex;
   flex-wrap: wrap;
-  gap: 32px;
+  gap: 40px;
   justify-content: center;
   align-items: center;
-  margin-top: 34px;
+  margin-top: 50px;
 }
 
 .logo-strip .logo-cell {
-  height: 120px;
-  width: 200px;
+  height: 160px;
+  width: 260px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .logo-strip img {
-  max-height: 110px;
-  max-width: 180px;
+  max-height: 150px;
+  max-width: 240px;
   object-fit: contain;
 }
 
@@ -430,11 +477,223 @@ li { margin: 14px 0; }
   margin: 8px 0;
 }
 
+.two-col-bullets {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 80px;
+  column-fill: balance;
+}
+
+.two-col-bullets li {
+  break-inside: avoid;
+}
+
+/* Flowchart reconstruction for slide 4. */
+.agent-flowchart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 44px;
+  margin-top: 30px;
+}
+
+.agent-flowchart .step.hidden {
+  display: none;
+}
+
+.flow-row {
+  display: flex;
+  justify-content: center;
+  gap: 180px;
+  width: 100%;
+}
+
+.flow-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  max-width: 420px;
+}
+
+.flow-node img {
+  max-height: 320px;
+  width: auto;
+  object-fit: contain;
+  border-radius: 14px;
+}
+
+.flow-label {
+  font-family: var(--mono-font);
+  font-size: 22px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.flow-path {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.flow-step {
+  font-family: var(--mono-font);
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: rgba(232, 155, 95, 0.10);
+  border: 1px solid rgba(232, 155, 95, 0.35);
+  border-radius: 14px;
+  padding: 22px 30px;
+  color: var(--text);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.55);
+  white-space: nowrap;
+}
+
+.flow-step.query {
+  border-color: rgba(232, 155, 95, 0.80);
+  background: rgba(232, 155, 95, 0.18);
+}
+
+.flow-step.stop {
+  border-color: rgba(183, 74, 29, 0.80);
+  background: rgba(183, 74, 29, 0.18);
+  color: var(--accent-strong);
+}
+
+.flow-arrow {
+  font-size: 44px;
+  color: var(--accent);
+  font-weight: 700;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.55);
+}
+
+.flow-arrow.down {
+  transform: rotate(90deg);
+}
+
+.flow-loop {
+  font-family: var(--serif-font);
+  font-size: 52px;
+  font-style: italic;
+  color: var(--accent-strong);
+  margin-top: 4px;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55);
+}
+
+/* Step reveals must keep layout when hidden. */
+.step.hidden {
+  visibility: hidden;
+}
+
+img.step.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Complexity map stack with rotation/overlap. */
+.complexity-stack {
+  position: relative;
+  width: 100%;
+  height: 620px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.complexity-layer {
+  position: absolute;
+  max-width: 760px;
+  max-height: 540px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 14px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+  transition: transform 0.4s ease, opacity 0.3s ease;
+}
+
+.complexity-layer:nth-child(1) { top: 4%; left: 6%; }
+.complexity-layer:nth-child(2) { top: 2%; right: 6%; }
+.complexity-layer:nth-child(3) { bottom: 6%; left: 10%; }
+.complexity-layer:nth-child(4) { bottom: 2%; right: 10%; }
+
+.complexity-layer.hidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.92) !important;
+}
+
+/* Glow panel to lift dark images off the background. */
+.glow-panel {
+  padding: 16px;
+  border-radius: 24px;
+  background: radial-gradient(circle at 30% 30%, rgba(232, 155, 95, 0.14), rgba(232, 155, 95, 0.04) 60%);
+  border: 1px solid rgba(232, 155, 95, 0.22);
+  box-shadow: 0 0 60px rgba(232, 155, 95, 0.10), 0 22px 55px rgba(0, 0, 0, 0.45);
+}
+
+.glow-panel img {
+  border-radius: 16px;
+  margin: 0;
+}
+
+/* Caption overlay for joke stock-photo watermarks. */
+.image-with-caption {
+  position: relative;
+  display: inline-flex;
+}
+
+.image-caption-overlay {
+  position: absolute;
+  bottom: 18px;
+  right: 18px;
+  margin: 0;
+  padding: 8px 14px;
+  font-family: var(--mono-font);
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(15, 10, 6, 0.92);
+  background: rgba(245, 230, 200, 0.78);
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+  transform: rotate(-2deg);
+}
+
+/* Larger logo strip variant, forced into a balanced 3x2 grid. */
+.logo-strip-large {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  justify-items: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.logo-strip-large .logo-cell {
+  height: 200px;
+  width: 100%;
+  max-width: 360px;
+}
+
+.logo-strip-large img {
+  max-height: 190px;
+  max-width: 100%;
+}
+
 /* Better fitting images inside split panels. */
 .panel-image {
   display: block;
   max-width: 100%;
-  max-height: 720px;
+  max-height: 780px;
   height: auto;
   width: auto;
   object-fit: contain;
