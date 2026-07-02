@@ -61,8 +61,6 @@ void main() {
   float bloom = exp(-sunDist * 2.8) * 0.18;
   color += vec3(1.0, 0.62, 0.30) * bloom;
 
-  // fine dust grain
-  color += (hash(uv * iResolution.xy + iTime) - 0.5) * 0.018;
 
   // heavy vignette like looking through a visor
   float vig = 1.0 - smoothstep(0.30, 0.95, length((uv - 0.5) * 1.7));
