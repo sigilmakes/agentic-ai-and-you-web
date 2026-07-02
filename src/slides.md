@@ -188,8 +188,6 @@ eyebrow: Part I
 title: How did we get here, and why?
 ---
 
-<p class="quote quote-large" style="margin-top: 40px;">Seems like a stupid question, but it’s worth asking</p>
-
 ---
 slide: 17
 type: default
