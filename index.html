@@ -1278,47 +1278,99 @@ float blobField(vec2 uv, float t, float seed, float scale) {
   return fbmPerlin(p + drift * 1.8);
 }
 
+// simple pseudo-random
+float rand(vec2 p) {
+  return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+// slow drifting warm ember particles
+float embers(vec2 uv, float t) {
+  float v = 0.0;
+  for (int i = 0; i < 55; i++) {
+    float fi = float(i);
+    float speed = 0.03 + 0.05 * fract(fi * 0.37);
+    float size = 0.004 + 0.007 * fract(fi * 0.71);
+
+    float x = fract(fi * 0.13 + t * speed * 0.25 + sin(t * 0.06 + fi) * 0.10);
+    float y = fract(fi * 0.29 - t * speed * 0.40 + cos(t * 0.05 + fi * 1.3) * 0.08);
+
+    vec2 pos = vec2(x, y);
+    vec2 wrap = abs(uv - pos);
+    wrap = min(wrap, 1.0 - wrap);
+
+    float d = length(wrap);
+    float sparkle = 0.5 + 0.5 * sin(t * (1.2 + fract(fi * 0.53)) + fi);
+    v += smoothstep(size * 5.0, size, d) * sparkle * 0.055;
+  }
+  return v;
+}
+
+// slow rotating light rays / god-rays
+float godRays(vec2 uv, float t) {
+  vec2 center = uv - 0.5;
+  float angle = atan(center.y, center.x) + t * 0.08;
+  float rays = sin(angle * 8.0 + t * 0.15) * 0.5 + 0.5;
+  rays += sin(angle * 14.0 - t * 0.22) * 0.5 + 0.5;
+  rays *= 0.5;
+  float dist = length(center) * 1.6;
+  float falloff = exp(-dist * 1.8);
+  return smoothstep(0.35, 0.85, rays) * falloff * 0.18;
+}
+
+// soft aurora-like band that ripples across the frame
+float aurora(vec2 uv, float t) {
+  vec2 p = uv * vec2(4.0, 1.8);
+  float wave = sin(p.x * 2.2 + t * 0.30 + fbmPerlin(p + t * 0.06) * 1.8) * 0.5 + 0.5;
+  float y = uv.y * 1.8 - 0.9 + sin(uv.x * 2.5 + t * 0.15) * 0.18;
+  float band = smoothstep(0.50, 0.90, wave) * exp(-y * y * 2.8);
+  return band * 0.30;
+}
+
 void main() {
   vec2 uv = gl_FragCoord.xy / iResolution.xy;
-  float t = iTime * 0.55;
+  float t = iTime * 0.38;
 
-  // base dark warm void, slightly lifted so motion is visible
-  vec3 color = vec3(0.20, 0.13, 0.08);
+  // base dark warm void
+  vec3 color = vec3(0.20, 0.12, 0.07);
 
-  // strong global breathing pulse
+  // firm but not overwhelming global breathing pulse
   float breathe = 0.72 + 0.28 * sin(t * 0.95);
 
   // large warm amber blobs drifting on independent random paths
-  float a = blobField(uv, t, 1.0, 1.7);
-  float maskA = smoothstep(0.28, 0.72, a);
-  color += vec3(0.82, 0.46, 0.20) * maskA * 0.70 * breathe;
+  float a = blobField(uv, t, 1.0, 1.6);
+  float maskA = smoothstep(0.26, 0.74, a);
+  color += vec3(0.84, 0.46, 0.19) * maskA * 0.75 * breathe;
 
   // cooler teal blobs, smaller and faster, wandering elsewhere
-  float b = blobField(uv + vec2(3.7, -2.2), t * 0.90, 4.3, 2.5);
+  float b = blobField(uv + vec2(3.7, -2.2), t * 0.90, 4.3, 2.4);
   float maskB = smoothstep(0.32, 0.68, b);
-  color += vec3(0.50, 0.78, 0.74) * maskB * 0.32 * (0.75 + 0.40 * sin(t * 1.7));
+  color += vec3(0.48, 0.78, 0.74) * maskB * 0.34 * (0.78 + 0.35 * sin(t * 1.6));
 
   // deep rust/brown undercurrents
-  float c = blobField(uv * 0.7 + vec2(-1.8, 2.4), t * 0.60, 7.1, 1.3);
-  float maskC = smoothstep(0.26, 0.74, c);
-  color += vec3(0.62, 0.28, 0.13) * maskC * 0.30 * breathe;
+  float c = blobField(uv * 0.7 + vec2(-1.8, 2.4), t * 0.60, 7.1, 1.25);
+  float maskC = smoothstep(0.24, 0.76, c);
+  color += vec3(0.64, 0.28, 0.13) * maskC * 0.32 * breathe;
 
   // bright wandering highlight
   vec2 sunPos = vec2(
-    0.5 + 0.42 * meander(vec2(t * 0.09), t * 0.5, 2.0).x,
-    0.5 + 0.34 * meander(vec2(t * 0.07), t * 0.5, 5.0).y
+    0.5 + 0.42 * meander(vec2(t * 0.10), t * 0.5, 2.0).x,
+    0.5 + 0.34 * meander(vec2(t * 0.08), t * 0.5, 5.0).y
   );
   float sunDist = length((uv - sunPos) * vec2(1.0, 1.5));
-  float sunGlow = exp(-sunDist * 2.6) * (0.75 + 0.55 * sin(t * 1.5));
-  color += vec3(1.0, 0.62, 0.30) * sunGlow * 0.32;
+  float sunGlow = exp(-sunDist * 2.6) * (0.75 + 0.55 * sin(t * 1.4));
+  color += vec3(1.0, 0.62, 0.30) * sunGlow * 0.34;
 
   // subtle color shift / chromatic drift
   color.r += 0.04 * sin(t * 0.6 + uv.y * 3.0);
   color.b += 0.03 * cos(t * 0.5 + uv.x * 2.5);
 
+  // soft aurora band across the upper area
+  float band = aurora(uv, t);
+  color += vec3(0.55, 0.85, 0.75) * band;
+
   // vignette to keep focus on the slide
-  float vig = 1.0 - smoothstep(0.35, 1.05, length((uv - 0.5) * 1.55));
-  color *= 0.68 + 0.32 * vig;
+  float vig = 1.0 - smoothstep(0.33, 1.05, length((uv - 0.5) * 1.55));
+  color *= 0.64 + 0.36 * vig;
 
   gl_FragColor = vec4(color, 1.0);
 }
