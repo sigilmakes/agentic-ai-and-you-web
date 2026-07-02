@@ -100,13 +100,14 @@ float godRays(vec2 uv, float t) {
   return smoothstep(0.35, 0.85, rays) * falloff * 0.18;
 }
 
-// soft aurora-like band that ripples across the frame
+// subtle, slow aurora-like haze that drifts and folds
 float aurora(vec2 uv, float t) {
-  vec2 p = uv * vec2(4.0, 1.8);
-  float wave = sin(p.x * 2.2 + t * 0.30 + fbmPerlin(p + t * 0.06) * 1.8) * 0.5 + 0.5;
-  float y = uv.y * 1.8 - 0.9 + sin(uv.x * 2.5 + t * 0.15) * 0.18;
-  float band = smoothstep(0.50, 0.90, wave) * exp(-y * y * 2.8);
-  return band * 0.30;
+  vec2 p = uv * vec2(2.8, 1.5);
+  float drift = fbmPerlin(p * 0.6 + vec2(t * 0.08, t * 0.05)) * 2.5;
+  float wave = sin(p.x * 1.8 + t * 0.22 + drift) * 0.5 + 0.5;
+  float y = uv.y * 1.6 - 0.75 + sin(uv.x * 2.2 + t * 0.12) * 0.22 + cos(t * 0.18 + uv.x * 1.4) * 0.12;
+  float band = smoothstep(0.52, 0.82, wave) * exp(-y * y * 3.2);
+  return band * 0.24;
 }
 
 void main() {
@@ -147,9 +148,10 @@ void main() {
   color.r += 0.04 * sin(t * 0.6 + uv.y * 3.0);
   color.b += 0.03 * cos(t * 0.5 + uv.x * 2.5);
 
-  // soft aurora band across the upper area
+  // subtle drifting aurora haze
   float band = aurora(uv, t);
-  color += vec3(0.55, 0.85, 0.75) * band;
+  color += vec3(0.62, 0.82, 0.72) * band;
+  color += vec3(0.85, 0.45, 0.22) * band * 0.45;
 
   // vignette to keep focus on the slide
   float vig = 1.0 - smoothstep(0.33, 1.05, length((uv - 0.5) * 1.55));
