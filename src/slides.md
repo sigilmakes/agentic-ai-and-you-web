@@ -219,6 +219,8 @@ title: Accessibility and specialisation in frontier science
   <p class="step hidden" data-step="3" style="margin-top: 24px; color: var(--accent);">— Vannevar Bush, 1945</p>
 </div>
 
+<!-- right -->
+
 <img src="images/slide-18-img-79.png" alt="" class="panel-image step hidden" data-step="3" />
 
 ---

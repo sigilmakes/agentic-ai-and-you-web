@@ -29,6 +29,16 @@ def escape_html(text: str) -> str:
     )
 
 
+def render_inline_markup(text: str) -> str:
+    """Convert simple Markdown-style markers to HTML."""
+    text = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", text)
+    text = re.sub(r"\*(.+?)\*", r"<em>\1</em>", text)
+    text = re.sub(r"__(.+?)__", r"<u>\1</u>", text)
+    text = re.sub(r"~~(.+?)~~", r"<s>\1</s>", text)
+    text = re.sub(r"`(.+?)`", r"<code>\1</code>", text)
+    return text
+
+
 def render_bullets(items, list_class="dense", steps=False, start_step=1):
     class_attr = f' class="{list_class}"' if list_class else ""
     lines = [f'<ul{class_attr}>']
@@ -48,7 +58,7 @@ def render_bullets(items, list_class="dense", steps=False, start_step=1):
             if steps:
                 step += 1
             class_attr = f' class="{li_class}"' if li_class else ""
-            lines.append(f"  <li{class_attr}{data}>{content}</li>")
+            lines.append(f"  <li{class_attr}{data}>{render_inline_markup(content)}</li>")
         elif isinstance(item, dict):
             if "text" in item:
                 text = item["text"]
@@ -69,7 +79,7 @@ def render_bullets(items, list_class="dense", steps=False, start_step=1):
                     li_class = "step hidden"
                     data = f' data-step="{explicit_step}"'
                 class_attr = f' class="{li_class}"' if li_class else ""
-                lines.append(f"  <li{class_attr}{data}>{text}")
+                lines.append(f"  <li{class_attr}{data}>{render_inline_markup(text)}")
                 if children:
                     lines.append(render_bullets(children, list_class="", steps=False))
                 lines.append("  </li>")
@@ -193,6 +203,12 @@ def render_split_slide(fm, slide_num, body):
         else:
             image_html = f'''          <div class="panel center">
             <img src="{image}" {img_attrs} class="{img_class}" />
+          </div>'''
+    elif "<!-- right -->" in body:
+        left, right = body.split("<!-- right -->", 1)
+        content_html = left.strip()
+        image_html = f'''          <div class="panel center">
+{right.strip()}
           </div>'''
     else:
         image_html = ""
