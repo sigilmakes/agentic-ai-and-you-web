@@ -31,18 +31,19 @@ float fbm(vec2 p) {
 void main() {
   vec2 uv = gl_FragCoord.xy / iResolution.xy;
   float t = iTime * 0.08;
+  float slowT = iTime * 0.018;
 
   // dusty, sun-bleached palette
   vec3 color = vec3(0.18, 0.13, 0.09);
 
   // huge, slow-moving sand/dust currents
-  vec2 p1 = uv * 1.2 + vec2(t * 0.25, t * 0.12);
+  vec2 p1 = uv * 0.55 + vec2(slowT * 0.12, slowT * 0.08);
   float n1 = fbm(p1);
 
-  vec2 p2 = uv * 2.4 - vec2(t * 0.18, t * 0.22) + 3.1;
+  vec2 p2 = uv * 1.1 - vec2(slowT * 0.10, slowT * 0.14) + 3.1;
   float n2 = fbm(p2);
 
-  vec2 p3 = uv * 4.0 + vec2(t * 0.10, -t * 0.15) + 6.4;
+  vec2 p3 = uv * 2.2 + vec2(slowT * 0.07, -slowT * 0.11) + 6.4;
   float n3 = fbm(p3);
 
   // layered haze
