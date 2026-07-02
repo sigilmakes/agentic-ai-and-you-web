@@ -60,6 +60,7 @@
 
   const start = performance.now();
   let last = -Infinity;
+  let last = -Infinity;
 
   function render(now) {
     requestAnimationFrame(render);
