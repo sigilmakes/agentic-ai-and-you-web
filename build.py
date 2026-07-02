@@ -181,7 +181,7 @@ def render_split_slide(fm, slide_num, body):
     if body.strip() and not bullets:
         content_html = body.strip()
     else:
-        content_html = f"            <h2>{title}</h2>\n{bullet_html}\n{body.strip()}"
+        content_html = f"            <h2>{render_inline_markup(title)}</h2>\n{bullet_html}\n{body.strip()}"
 
     if image:
         img_class = "panel-image"
@@ -231,7 +231,7 @@ def render_default_slide(fm, slide_num, body):
     steps = fm.get("steps", False)
     list_class = fm.get("listClass", "dense")
 
-    parts = [f"          <h2>{title}</h2>"]
+    parts = [f"          <h2>{render_inline_markup(title)}</h2>"]
     if bullets:
         parts.append(render_bullets(bullets, list_class=list_class, steps=steps))
     if body.strip():
