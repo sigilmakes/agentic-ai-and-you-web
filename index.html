@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Agentic AI And You</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+      :root {
+        color-scheme: dark;
+        --serif-font: "Crimson Pro", "EB Garamond", Garamond, "Times New Roman", serif;
+        --mono-font: "IBM Plex Mono", "SFMono-Regular", ui-monospace, monospace;
+        --bg: #0f0a06;
+        --text: rgba(251, 245, 235, 0.96);
+        --muted: rgba(232, 215, 190, 0.72);
+        --soft: rgba(245, 230, 200, 0.58);
+        --accent: #e89b5f;
+        --accent-strong: #f5aa6e;
+        --rule: rgba(216, 233, 235, 0.18);
+      }
+
+      * { box-sizing: border-box; }
+
+      html, body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: var(--bg);
+        color: var(--text);
+        overscroll-behavior: none;
+        touch-action: none;
+      }
+
+      body { font-family: var(--serif-font); }
+
+      #backdrop {
+        position: fixed;
+        inset: 0;
+        width: 100vw;
+        height: 100vh;
+        display: block;
+        background: var(--bg);
+      }
+
+      .backdrop-scrim {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(circle at 50% 0%, rgba(232, 155, 95, 0.06), transparent 40%),
+          radial-gradient(circle at 80% 80%, rgba(61, 139, 142, 0.05), transparent 35%),
+          linear-gradient(180deg, rgba(15, 10, 6, 0.2), rgba(15, 10, 6, 0.45) 60%, rgba(15, 10, 6, 0.72) 100%),
+          repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0, 0, 0, 0.12) 3px, rgba(0, 0, 0, 0.12) 4px);
+        z-index: 1;
+      }
+
+      .deck {
+        width: 1920px;
+        height: 1080px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform-origin: center center;
+        z-index: 2;
+      }
+
+      .deck-footer {
+        position: absolute;
+        left: 100px;
+        right: 100px;
+        bottom: 42px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        pointer-events: none;
+        z-index: 3;
+        font-family: var(--mono-font);
+        font-size: 16px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--soft);
+      }
+
+      .slide {
+        display: none;
+        width: 1920px;
+        height: 1080px;
+        padding: 90px 100px 100px;
+        align-content: center;
+      }
+
+      .slide.active { display: grid; }
+
+      .frame {
+        width: 100%;
+        max-width: 1640px;
+      }
+
+      .frame-narrow { max-width: 1240px; }
+      .frame-wide { max-width: 1720px; }
+      .center { justify-items: center; text-align: center; margin-inline: auto; }
+
+      h1, h2, h3, p, ul, li { margin: 0; }
+
+      h1 {
+        font-family: var(--serif-font);
+        font-size: 112px;
+        font-weight: 500;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        text-wrap: balance;
+        color: var(--text);
+      }
+
+      h2 {
+        font-family: var(--serif-font);
+        font-size: 80px;
+        font-weight: 500;
+        line-height: 1.02;
+        letter-spacing: -0.025em;
+        text-wrap: balance;
+        color: var(--text);
+      }
+
+      h3 {
+        font-family: var(--mono-font);
+        font-size: 24px;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 18px;
+      }
+
+      p, li {
+        font-family: var(--serif-font);
+        font-size: 44px;
+        font-weight: 400;
+        line-height: 1.28;
+        letter-spacing: -0.01em;
+        color: var(--text);
+      }
+
+      ul {
+        padding-left: 44px;
+        margin-top: 22px;
+      }
+
+      li { margin: 14px 0; }
+
+      .eyebrow, .subtitle, .caption, .small {
+        font-family: var(--mono-font);
+        letter-spacing: 0.08em;
+      }
+
+      .eyebrow {
+        margin-bottom: 26px;
+        font-size: 22px;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+
+      .subtitle {
+        margin-top: 28px;
+        font-size: 22px;
+        line-height: 1.5;
+        color: var(--muted);
+        text-transform: uppercase;
+      }
+
+      .title-slide h1 {
+        font-style: italic;
+        font-weight: 500;
+        max-width: 1200px;
+      }
+
+      .big-text {
+        font-size: 66px;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        text-wrap: balance;
+      }
+
+      .quote {
+        margin-top: 30px;
+        font-style: italic;
+        color: rgba(251, 245, 235, 0.92);
+      }
+
+      .quote-large {
+        max-width: 1300px;
+        font-size: 54px;
+        line-height: 1.18;
+      }
+
+      .split {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 64px;
+        align-items: start;
+        margin-top: 30px;
+      }
+
+      .split-60-40 { grid-template-columns: 1.15fr 0.85fr; }
+      .split-40-60 { grid-template-columns: 0.85fr 1.15fr; }
+      .split-70-30 { grid-template-columns: 1.3fr 0.7fr; }
+      .split-30-70 { grid-template-columns: 0.7fr 1.3fr; }
+
+      .panel { position: relative; }
+
+      .panel ul {
+        margin-top: 0;
+        padding-left: 34px;
+      }
+
+      .panel li {
+        font-size: 38px;
+        line-height: 1.26;
+        margin: 10px 0;
+      }
+
+      .image-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px;
+        margin-top: 30px;
+        align-items: stretch;
+      }
+
+      .image-grid-3 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .image-grid-4 {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .image-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 16px;
+      }
+
+      .image-wrap .image-cell {
+        flex: 1 1 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        min-height: 260px;
+        max-height: 440px;
+      }
+
+      .image-wrap img {
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: 420px;
+        object-fit: contain;
+        border-radius: 12px;
+      }
+
+      .slide-content-image {
+        display: block;
+        max-width: 100%;
+        max-height: 520px;
+        object-fit: contain;
+        border-radius: 14px;
+        margin-top: 20px;
+      }
+
+      .panel.center { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; }
+      .panel.center img { margin-top: 0; }
+
+      .caption {
+        font-size: 18px;
+        text-transform: uppercase;
+        color: var(--soft);
+      }
+
+      .small {
+        font-size: 20px;
+        color: var(--soft);
+      }
+
+      .steps { margin-top: 18px; }
+      .step.hidden { visibility: hidden; }
+
+      .statement-slide .frame { text-align: center; }
+      .statement-slide h2 { margin-bottom: 40px; }
+
+      .kicker {
+        font-family: var(--mono-font);
+        font-size: 22px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--accent);
+        margin-bottom: 18px;
+      }
+
+      .three-boxes {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 32px;
+        margin-top: 40px;
+      }
+
+      .box {
+        background: rgba(232, 155, 95, 0.08);
+        border: 1px solid rgba(232, 155, 95, 0.25);
+        border-radius: 16px;
+        padding: 28px;
+      }
+
+      .box p {
+        font-size: 32px;
+        line-height: 1.25;
+        color: var(--text);
+      }
+
+      .logo-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 28px;
+        justify-content: center;
+        align-items: center;
+        margin-top: 30px;
+      }
+
+      .logo-row img {
+        max-height: 120px;
+        max-width: 220px;
+        object-fit: contain;
+      }
+
+      .label {
+        font-family: var(--mono-font);
+        font-size: 20px;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-top: 8px;
+      }
+
+      .dense li {
+        font-size: 40px;
+        line-height: 1.24;
+        margin: 12px 0;
+      }
+
+      .compact li {
+        font-size: 36px;
+        line-height: 1.22;
+        margin: 8px 0;
+      }
+
+      em { color: var(--accent-strong); font-style: italic; }
+      strong { color: var(--accent-strong); font-weight: 600; }
+
+      @media (max-width: 900px) {
+        h1 { font-size: 64px; }
+        h2 { font-size: 48px; }
+        p, li { font-size: 28px; }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="backdrop" aria-hidden="true"></canvas>
+    <div class="backdrop-scrim"></div>
+
+    <div class="deck">
+      <div class="deck-footer" aria-hidden="true">
+        <span>Willow Sparks</span>
+        <span>Agentic AI And You</span>
+      </div>
+
+      <!-- SLIDE 1 -->
+      <section class="slide title-slide center active" data-slide="1">
+        <div class="frame center">
+          <p class="eyebrow">Agentic AI And You</p>
+          <h1>Why Human Collaboration Is More Important Than Ever</h1>
+          <p class="subtitle">Willow Sparks</p>
+        </div>
+      </section>
+
+      <!-- SLIDE 2 -->
+      <section class="slide" data-slide="2">
+        <div class="frame split split-60-40">
+          <div class="panel">
+            <h2>Who am I?</h2>
+            <ul class="dense">
+              <li>Scientific Computing Graduate since 2024 (nearly finished!) at Daresbury Labs</li>
+              <li>Joined after finishing my MPhys at Lancaster University</li>
+              <li>Worked on various different cool projects in different groups in SCD, e.g.:
+                <ul>
+                  <li>DFT Processing Tools</li>
+                  <li>Monte-Carlo Simulators</li>
+                  <li>Cryo-EM Compression Tools</li>
+                  <li>and more!</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="panel center">
+            <img src="images/slide-2-img-19.png" alt="" class="slide-content-image" />
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3 -->
+      <section class="slide" data-slide="3">
+        <div class="frame split split-60-40">
+          <div class="panel">
+            <h2>AI Agents</h2>
+            <ul class="dense">
+              <li>This year, I’ve been spending most of my time working with AI and building AI agents.</li>
+              <li>It’s been a really weird year!</li>
+              <li>Rather than focusing on the technical stuff, I’d like to discuss how will this affect collaboration</li>
+            </ul>
+          </div>
+          <div class="panel center">
+            <img src="images/slide-3-img-22.png" alt="" class="slide-content-image" />
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4 -->
+      <section class="slide" data-slide="4">
+        <div class="frame frame-wide">
+          <h2>What is an agent?</h2>
+          <div class="image-grid image-grid-3" style="align-items: stretch;">
+            <div class="image-wrap">
+              <div class="image-cell"><img src="images/slide-4-img-24.png" alt="" /></div>
+              <span class="label">An LLM (ChatGPT, Claude etc)</span>
+            </div>
+            <div class="image-wrap">
+              <div class="image-cell"><img src="images/slide-4-img-25.png" alt="" /></div>
+              <span class="label">“Tools” (Bash, File I/O, Search etc)</span>
+            </div>
+            <div class="image-wrap">
+              <div class="box" style="height: 100%; min-height: 260px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                <p style="font-size: 30px; text-align: center; margin-bottom: 16px;">
+                  Start with goal<br/>→ Think + Use tools<br/>→ Goal achieved?<br/>→ Stop<br/><em>and a loop!</em>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5 -->
+      <section class="slide" data-slide="5">
+        <div class="frame">
+          <h2>What can agents help with?</h2>
+          <p class="big-text" style="margin-top: 18px; color: var(--accent);">Basically everything!</p>
+          <ul class="dense">
+            <li>Writing and debugging code</li>
+            <li>Running simulations</li>
+            <li>Doing research</li>
+            <li>Performing statistical analysis</li>
+            <li>Consolidating and summarising information</li>
+            <li>Coordinating with others</li>
+            <li>...dealing with paperwork</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- SLIDE 6 -->
+      <section class="slide statement-slide" data-slide="6">
+        <div class="frame center">
+          <h2>Vibe coding….</h2>
+          <img src="images/slide-6-img-40.png" alt="" class="slide-content-image" style="max-height: 620px;" />
+        </div>
+      </section>
+
+      <!-- SLIDE 7 -->
+      <section class="slide" data-slide="7">
+        <div class="frame frame-wide center">
+          <h2>Software development is getting weird</h2>
+          <div class="logo-row">
+            <img src="images/slide-7-img-42.png" alt="" />
+            <img src="images/slide-7-img-43.png" alt="" />
+            <img src="images/slide-7-img-44.png" alt="" />
+            <img src="images/slide-7-img-45.png" alt="" />
+            <img src="images/slide-7-img-46.png" alt="" />
+            <img src="images/slide-7-img-47.png" alt="" />
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8 -->
+      <section class="slide" data-slide="8">
+        <div class="frame split split-60-40">
+          <div class="panel">
+            <h2>Some statistics - GitHub</h2>
+            <ul class="dense">
+              <li>There were ~1 billion commits to github in 2025. In April it reached 275 million per week</li>
+              <li>In February, around 4% of all commits were written by Claude Code.</li>
+            </ul>
+            <p class="small" style="margin-top: 20px;">(Source: GitHub)</p>
+          </div>
+          <div class="panel center">
+            <img src="images/slide-8-img-50.png" alt="" class="slide-content-image" />
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 9 -->
+      <section class="slide statement-slide" data-slide="9">
+        <div class="frame center">
+          <h2>Some statistics - METR</h2>
+          <img src="images/slide-9-img-52.png" alt="" class="slide-content-image" style="max-height: 680px;" />
+        </div>
+      </section>
+
+      <!-- SLIDE 10 -->
+      <section class="slide statement-slide" data-slide="10">
+        <div class="frame center">
+          <h2 style="max-width: 1200px;">In early 2025, METR reported AI tools largely slowed people down?</h2>
+          <img src="images/slide-10-img-54.png" alt="" class="slide-content-image" style="max-height: 580px;" />
+        </div>
+      </section>
+
+      <!-- SLIDE 11 -->
+      <section class="slide statement-slide" data-slide="11">
+        <div class="frame center">
+          <h2>Then those results were declared outdated this year...</h2>
+          <img src="images/slide-11-img-56.png" alt="" class="slide-content-image" style="max-height: 620px;" />
+        </div>
+      </section>
+
+      <!-- SLIDE 12 -->
+      <section class="slide" data-slide="12">
+        <div class="frame frame-wide center">
+          <h2>Productivity is up! But...</h2>
+          <div class="image-grid image-grid-3">
+            <img src="images/slide-12-img-58.png" alt="" />
+            <img src="images/slide-12-img-59.png" alt="" />
+            <img src="images/slide-12-img-60.png" alt="" />
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 13 -->
+      <section class="slide" data-slide="13">
+        <div class="frame frame-wide center">
+          <h2>AI is <em>divisive</em></h2>
+          <div class="image-grid image-grid-4">
+            <img src="images/slide-13-img-62.png" alt="" />
+            <img src="images/slide-13-img-63.png" alt="" />
+            <img src="images/slide-13-img-64.png" alt="" />
+            <img src="images/slide-13-img-65.png" alt="" />
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 14 -->
+      <section class="slide" data-slide="14">
+        <div class="frame frame-wide center">
+          <h2>Agents are spreading beyond software</h2>
+          <div class="image-grid image-grid-3">
+            <img src="images/slide-14-img-67.png" alt="" />
+            <img src="images/slide-14-img-68.png" alt="" />
+            <img src="images/slide-14-img-69.png" alt="" />
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 15 -->
+      <section class="slide" data-slide="15">
+        <div class="frame split split-60-40">
+          <div class="panel">
+            <h2>Personal Experience</h2>
+            <ul class="dense">
+              <li>When I joined in 2024, I was staunchly anti-AI</li>
+              <li>Eventually, I relented in 2025 when I had to port a horrific piece of “scientist code” to GPUs</li>
+              <li>Carried on from there, trying to use tools mindfully</li>
+              <li>Since December 2025, I haven’t written a single line of code and have spent almost all my time designing AI agents</li>
+              <li>It’s been a weird flip</li>
+            </ul>
+          </div>
+          <div class="panel center">
+            <img src="images/slide-15-img-72.png" alt="" class="slide-content-image" />
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 16 -->
+      <section class="slide statement-slide" data-slide="16">
+        <div class="frame center">
+          <p class="eyebrow">Part I</p>
+          <h2>How did we get here, and why?</h2>
+          <p class="quote quote-large" style="margin-top: 40px;">Seems like a stupid question, but it’s worth asking</p>
+        </div>
+      </section>
+
+      <!-- SLIDE 17 -->
+      <section class="slide" data-slide="17">
+        <div class="frame">
+          <h2>Raise your hand if you know the following:</h2>
+          <ul class="compact">
+            <li>How to write a python script?</li>
+            <li>How to use git?</li>
+            <li>How to write GPU kernels?</li>
+            <li>How the Haber process works?</li>
+            <li>What AdS/CFT correspondence is and why it matters?</li>
+            <li>How to design an mRNA vaccine to fight against a global pandemic?</li>
+            <li>How to calculate magnetic susceptibility bandstructures using ab-initio methods?</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- SLIDE 18 -->
+      <section class="slide" data-slide="18">
+        <div class="frame split split-50-50" style="grid-template-columns: 1fr 1fr;">
+          <div class="panel">
+            <h2>Accessibility and specialisation in frontier science</h2>
+            <div class="quote quote-large" style="margin-top: 24px;">
+              <p>“Science has provided the swiftest communication between individuals”</p>
+              <p style="margin-top: 24px;">“There is a growing mountain of research. But there is increased evidence that we are being bogged down today as specialization extends”</p>
+              <p style="margin-top: 24px; color: var(--accent);">— Vannevar Bush, 1945</p>
+            </div>
+          </div>
+          <div class="panel center">
+            <img src="images/slide-18-img-79.png" alt="" class="slide-content-image" style="max-height: 720px;" />
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 19 -->
+      <section class="slide" data-slide="19">
+        <div class="frame">
+          <h2>Specialisation</h2>
+          <div class="three-boxes">
+            <div class="box"><p>The world is highly specialised, and this has brought many benefits</p></div>
+            <div class="box"><p>Specialisation is a massive barrier to collaboration</p></div>
+            <div class="box"><p>We need tools to enable collaboration in light of specialisation</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 20 -->
+      <section class="slide" data-slide="20">
+        <div class="frame frame-wide center">
+          <h2>Computers: Intelligence Augmentation</h2>
+          <div class="image-grid image-grid-3" style="grid-template-columns: repeat(3, 1fr);">
+            <div class="image-wrap">
+              <img src="images/slide-20-img-87.png" alt="" />
+              <span class="label">Jean Bartik</span>
+            </div>
+            <div class="image-wrap">
+              <img src="images/slide-20-img-88.png" alt="" />
+              <span class="label">Frances Spence</span>
+            </div>
+            <div class="image-wrap">
+              <span class="label" style="margin-top: auto; margin-bottom: auto; font-size: 32px; color: var(--accent);">Douglas Engelbart</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 21 -->
+      <section class="slide" data-slide="21">
+        <div class="frame split split-60-40">
+          <div class="panel">
+            <h2>Computers enable collaboration</h2>
+            <ul class="dense">
+              <li>Instant communication with everyone around the world</li>
+              <li>Instant access to all the world’s knowledge and learning resources</li>
+              <li>Automation of large scale numerical calculations far beyond human scale</li>
+              <li>and more!</li>
+            </ul>
+          </div>
+          <div class="panel center">
+            <img src="images/slide-21-img-97.png" alt="" class="slide-content-image" />
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 22 -->
+      <section class="slide" data-slide="22">
+        <div class="frame frame-wide center">
+          <h2>But the world keeps getting more complex...</h2>
+          <div class="image-grid image-grid-4">
+            <img src="images/slide-22-img-99.png" alt="" />
+            <img src="images/slide-22-img-100.png" alt="" />
+            <img src="images/slide-22-img-101.png" alt="" />
+            <img src="images/slide-22-img-102.png" alt="" />
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 23 -->
+      <section class="slide" data-slide="23">
+        <div class="frame frame-wide center">
+          <h2>Problems too big for one person to solve...</h2>
+          <div class="image-grid">
+            <img src="images/slide-23-img-104.png" alt="" />
+            <img src="images/slide-23-img-105.png" alt="" />
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 24 -->
+      <section class="slide" data-slide="24">
+        <div class="frame">
+          <h2>Specialisation</h2>
+          <div class="three-boxes">
+            <div class="box"><p>The world is highly specialised, and this has brought many benefits</p></div>
+            <div class="box"><p>Specialisation is a massive barrier to collaboration</p></div>
+            <div class="box"><p>We need tools to enable collaboration in light of specialisation</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 25 -->
+      <section class="slide statement-slide" data-slide="25">
+        <div class="frame center">
+          <p class="eyebrow">Part II</p>
+          <h2>What impact do agents have?</h2>
+          <p class="quote quote-large" style="margin-top: 40px;">Do agents make this problem better or worse?</p>
+        </div>
+      </section>
+
+      <!-- SLIDE 26 -->
+      <section class="slide statement-slide" data-slide="26">
+        <div class="frame center">
+          <h2>Software Development</h2>
+          <p class="subtitle">Feels like this:</p>
+          <img src="images/slide-26-img-116.png" alt="" class="slide-content-image" style="max-height: 620px;" />
+        </div>
+      </section>
+
+      <!-- SLIDE 27 -->
+      <section class="slide" data-slide="27">
+        <div class="frame">
+          <h2>It’s never been easier...</h2>
+          <ul class="dense">
+            <li>To make software!</li>
+            <li>To make software with less experience!</li>
+            <li>To <em>think</em> you made software with less experience…</li>
+            <li>To spam open-source projects with broken code...</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- SLIDE 28 -->
+      <section class="slide" data-slide="28">
+        <div class="frame split split-60-40">
+          <div class="panel">
+            <h2>Personal Experience - Myself</h2>
+            <ul class="dense">
+              <li>At this point, I don’t write any code</li>
+              <li>It’s fun, and I’m a better engineer for it!</li>
+              <li>It’s also been a really good learning tool, because I still make effort to learn.</li>
+              <li>But this all only works because I know how software development works</li>
+              <li>Software was so easy for AI to “automate” because software is verifiable.</li>
+              <li>This is not “a normal jump in abstraction”</li>
+            </ul>
+          </div>
+          <div class="panel center">
+            <img src="images/slide-28-img-121.png" alt="" class="slide-content-image" />
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 29 -->
+      <section class="slide" data-slide="29">
+        <div class="frame split split-60-40">
+          <div class="panel">
+            <h2>Teamwork</h2>
+            <ul class="dense">
+              <li>AI reduces barriers for collaboration</li>
+              <li>Makes it easier to centralise, share and standardise information</li>
+            </ul>
+            <p class="caption" style="margin-top: 40px;">Obligatory “stock photo with watermark spam”</p>
+          </div>
+          <div class="panel center">
+            <img src="images/slide-29-img-124.png" alt="" class="slide-content-image" />
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 30 -->
+      <section class="slide" data-slide="30">
+        <div class="frame split split-60-40">
+          <div class="panel">
+            <h2>Slop Cannons</h2>
+            <ul class="dense">
+              <li>Rolling out AI tools with no training is terrible</li>
+              <li>It’s too easy to trust AI if you don’t understand what it’s done</li>
+              <li>Laziness with AI is infinitely worse than laziness without AI</li>
+            </ul>
+          </div>
+          <div class="panel center">
+            <img src="images/slide-30-img-128.png" alt="" class="slide-content-image" />
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 31 -->
+      <section class="slide title-slide center" data-slide="31">
+        <div class="frame center">
+          <h1>Expertise is still needed!</h1>
+        </div>
+      </section>
+
+      <!-- SLIDE 32 -->
+      <section class="slide" data-slide="32">
+        <div class="frame">
+          <h2>Some closing thoughts</h2>
+          <ul class="dense">
+            <li>Agentic AI is one of the most powerful tools we have for breaking through complexity, and the limits really are your imagination.</li>
+            <li>But blindly trusting AI does <em>not</em> work, and is a real danger</li>
+            <li>This problem isn’t solved by ignoring AI</li>
+            <li>Even if AI could “do everything” it would still be more important to learn how things work</li>
+            <li>Expertise from other people outside your discipline is <em>vital</em></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- SLIDE 33 -->
+      <section class="slide title-slide center" data-slide="33">
+        <div class="frame center">
+          <h1>Thanks for listening!</h1>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      // WebGL retro starfield shader
+      (() => {
+        const canvas = document.getElementById("backdrop");
+        const gl = canvas.getContext("webgl", { antialias: false, depth: false, stencil: false, alpha: false });
+        if (!gl) return;
+
+        const prefersReducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const renderScale = (window.devicePixelRatio || 1) < 1.5 ? 0.5 : 0.35;
+
+        const vs = `
+          attribute vec2 position;
+          void main() { gl_Position = vec4(position, 0.0, 1.0); }
+        `;
+
+        const fs = `
+          precision highp float;
+          uniform vec2 iResolution;
+          uniform float iTime;
+
+          #define PI 3.14159265359
+
+          float hash(vec2 p) {
+            return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
+          }
+
+          float hash1(float n) { return fract(sin(n) * 43758.5453123); }
+
+          float noise(vec2 p) {
+            vec2 i = floor(p);
+            vec2 f = fract(p);
+            f = f * f * (3.0 - 2.0 * f);
+            float a = hash(i);
+            float b = hash(i + vec2(1.0, 0.0));
+            float c = hash(i + vec2(0.0, 1.0));
+            float d = hash(i + vec2(1.0, 1.0));
+            return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+          }
+
+          float fbm(vec2 p) {
+            float v = 0.0;
+            float a = 0.5;
+            for (int i = 0; i < 5; i++) {
+              v += a * noise(p);
+              p *= 2.0;
+              a *= 0.5;
+            }
+            return v;
+          }
+
+          void main() {
+            vec2 uv = gl_FragCoord.xy / iResolution.xy;
+            vec2 aspect = vec2(iResolution.x / iResolution.y, 1.0);
+            float t = iTime * 0.012;
+
+            // Warm dark base: deep umber with a hint of teal
+            vec3 color = vec3(0.055, 0.035, 0.02);
+
+            // Large soft nebula planes drifting diagonally
+            vec2 nUv = uv * vec2(2.8, 2.2) + vec2(t * 0.4, -t * 0.25);
+            float neb = fbm(nUv);
+            float neb2 = fbm(uv * 4.5 - vec2(t * 0.15, t * 0.35) + 13.7);
+            float nebMix = smoothstep(0.25, 0.75, neb * 0.6 + neb2 * 0.4);
+            color += vec3(0.91, 0.55, 0.30) * nebMix * 0.14;
+            color += vec3(0.20, 0.48, 0.52) * (1.0 - nebMix) * 0.06;
+
+            // Distant amber sun glow low on the "horizon"
+            vec2 sunPos = vec2(0.5 + sin(t * 0.2) * 0.12, 0.72 + cos(t * 0.13) * 0.04);
+            float sunDist = length((uv - sunPos) * vec2(1.0, 0.55));
+            float sunGlow = exp(-sunDist * 5.0) * 0.18 + exp(-sunDist * 12.0) * 0.08;
+            color += vec3(1.0, 0.62, 0.28) * sunGlow;
+
+            // Starfield with two layers
+            vec2 starUv = uv * aspect;
+            float scroll1 = iTime * 0.006;
+            float scroll2 = iTime * 0.0025;
+            vec3 stars = vec3(0.0);
+
+            // Layer 1: dense small stars
+            vec2 grid1 = vec2(80.0, 55.0) * aspect;
+            vec2 cell1 = floor(starUv * grid1);
+            for (int y = -1; y <= 1; y++) {
+              for (int x = -1; x <= 1; x++) {
+                vec2 neighbor = cell1 + vec2(float(x), float(y));
+                vec2 rnd = vec2(hash(neighbor), hash(neighbor + 1.0));
+                if (rnd.x > 0.78) continue;
+                vec2 starPos = neighbor / grid1 + vec2(hash(neighbor + 2.0), hash(neighbor + 3.0)) / grid1;
+                vec2 delta = (starUv - starPos + vec2(scroll1, 0.0)) * iResolution.xy;
+                float size = 0.25 + rnd.y * 0.45;
+                float core = smoothstep(size, size * 0.2, length(delta));
+                float flicker = 0.82 + 0.18 * sin(iTime * 0.55 + hash(neighbor + 4.0) * 6.28);
+                float warm = hash(neighbor + 5.0);
+                vec3 starColor = mix(vec3(1.0, 0.96, 0.84), vec3(1.0, 0.74, 0.42), warm * 0.55);
+                stars += core * flicker * starColor * 0.95;
+              }
+            }
+
+            // Layer 2: larger, brighter rare stars
+            vec2 grid2 = vec2(28.0, 18.0) * aspect;
+            vec2 cell2 = floor(starUv * grid2);
+            for (int y = -1; y <= 1; y++) {
+              for (int x = -1; x <= 1; x++) {
+                vec2 neighbor = cell2 + vec2(float(x), float(y));
+                vec2 rnd = vec2(hash(neighbor * 1.7), hash(neighbor * 2.3 + 1.0));
+                if (rnd.x > 0.62) continue;
+                vec2 starPos = neighbor / grid2 + vec2(hash(neighbor + 7.0), hash(neighbor + 11.0)) / grid2;
+                vec2 delta = (starUv - starPos + vec2(scroll2, 0.0)) * iResolution.xy;
+                float size = 0.9 + rnd.y * 1.4;
+                float d = length(delta);
+                float core = smoothstep(size, size * 0.25, d);
+                float halo = smoothstep(size * 3.5, size, d) * 0.35;
+                float flicker = 0.78 + 0.22 * sin(iTime * 0.35 + hash(neighbor + 9.0) * 6.28);
+                vec3 starColor = mix(vec3(1.0, 0.95, 0.80), vec3(1.0, 0.70, 0.38), rnd.y);
+                stars += (core + halo) * flicker * starColor;
+              }
+            }
+            color += stars;
+
+            // Soft vignette + slight corner darkening
+            float vig = 1.0 - smoothstep(0.35, 1.2, length((uv - 0.5) * 1.85));
+            color *= 0.82 + 0.18 * vig;
+
+            // Subtle warm film grain
+            float grain = hash(uv * iResolution.xy + iTime) - 0.5;
+            color += grain * 0.015;
+
+            gl_FragColor = vec4(color, 1.0);
+          }
+        `;
+
+        function createShader(type, source) {
+          const s = gl.createShader(type);
+          gl.shaderSource(s, source);
+          gl.compileShader(s);
+          if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+            console.error(gl.getShaderInfoLog(s));
+            gl.deleteShader(s);
+            return null;
+          }
+          return s;
+        }
+
+        const program = gl.createProgram();
+        const vsCompiled = createShader(gl.VERTEX_SHADER, vs);
+        const fsCompiled = createShader(gl.FRAGMENT_SHADER, fs);
+        if (!vsCompiled || !fsCompiled) return;
+        gl.attachShader(program, vsCompiled);
+        gl.attachShader(program, fsCompiled);
+        gl.linkProgram(program);
+        if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return;
+
+        const buffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, -1,1, 1,-1, 1,1]), gl.STATIC_DRAW);
+
+        const posLoc = gl.getAttribLocation(program, "position");
+        const resLoc = gl.getUniformLocation(program, "iResolution");
+        const timeLoc = gl.getUniformLocation(program, "iTime");
+
+        function resize() {
+          const w = window.innerWidth;
+          const h = window.innerHeight;
+          canvas.width = Math.max(1, Math.floor(w * renderScale));
+          canvas.height = Math.max(1, Math.floor(h * renderScale));
+          canvas.style.width = w + "px";
+          canvas.style.height = h + "px";
+          gl.viewport(0, 0, canvas.width, canvas.height);
+        }
+
+        window.addEventListener("resize", resize);
+        resize();
+
+        const start = performance.now();
+        let last = -Infinity;
+
+        function render(now) {
+          requestAnimationFrame(render);
+          if (now - last < 33) return;
+          last = now;
+
+          gl.useProgram(program);
+          gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+          gl.enableVertexAttribArray(posLoc);
+          gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+          gl.uniform2f(resLoc, canvas.width, canvas.height);
+          gl.uniform1f(timeLoc, prefersReducedMotion ? 0 : (now - start) / 1000);
+          gl.drawArrays(gl.TRIANGLES, 0, 6);
+        }
+
+        requestAnimationFrame(render);
+      })();
+
+      // Deck scaling and navigation
+      const deck = document.querySelector(".deck");
+      const DECK_WIDTH = 1920;
+      const DECK_HEIGHT = 1080;
+
+      function scaleDeck() {
+        const sx = window.innerWidth / DECK_WIDTH;
+        const sy = window.innerHeight / DECK_HEIGHT;
+        deck.style.transform = `translate(-50%, -50%) scale(${Math.min(sx, sy)})`;
+      }
+
+      window.addEventListener("resize", scaleDeck);
+      scaleDeck();
+
+      const slides = Array.from(document.querySelectorAll(".slide"));
+      let slideIndex = 0;
+      let stepIndex = 0;
+
+      function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
+
+      function applySteps(slide) {
+        const steps = Array.from(slide.querySelectorAll(".step"));
+        steps.forEach((s, i) => s.classList.toggle("hidden", i >= stepIndex));
+        return steps.length;
+      }
+
+      function showSlide(index, shouldUpdateHash = true) {
+        slideIndex = clamp(index, 0, slides.length - 1);
+        slides.forEach((s, i) => s.classList.toggle("active", i === slideIndex));
+        const stepCount = applySteps(slides[slideIndex]);
+        stepIndex = clamp(stepIndex, 0, stepCount);
+        applySteps(slides[slideIndex]);
+        if (shouldUpdateHash) updateHash();
+      }
+
+      function updateHash() {
+        const n = slides[slideIndex].dataset.slide;
+        history.replaceState(null, "", `#${n}`);
+      }
+
+      function parseHash(raw) {
+        const n = Number.parseInt(raw, 10);
+        const idx = Number.isNaN(n) ? 0 : slides.findIndex(s => Number(s.dataset.slide) === n);
+        return idx === -1 ? 0 : idx;
+      }
+
+      function syncFromHash() {
+        showSlide(parseHash(window.location.hash.replace("#", "")), false);
+      }
+
+      function next(shouldUpdateHash = true) {
+        const steps = Array.from(slides[slideIndex].querySelectorAll(".step"));
+        if (stepIndex < steps.length) {
+          stepIndex += 1;
+          applySteps(slides[slideIndex]);
+          if (shouldUpdateHash) updateHash();
+          return;
+        }
+        if (slideIndex >= slides.length - 1) return;
+        stepIndex = 0;
+        showSlide(slideIndex + 1, shouldUpdateHash);
+      }
+
+      function prev(shouldUpdateHash = true) {
+        if (stepIndex > 0) {
+          stepIndex -= 1;
+          applySteps(slides[slideIndex]);
+          if (shouldUpdateHash) updateHash();
+          return;
+        }
+        slideIndex = clamp(slideIndex - 1, 0, slides.length - 1);
+        const steps = Array.from(slides[slideIndex].querySelectorAll(".step"));
+        stepIndex = steps.length;
+        showSlide(slideIndex, shouldUpdateHash);
+      }
+
+      function first() { stepIndex = 0; showSlide(0); }
+      function last() { stepIndex = 0; showSlide(slides.length - 1); }
+
+      window.addEventListener("hashchange", syncFromHash);
+      window.addEventListener("keydown", e => {
+        if (["ArrowRight", " ", "PageDown", "l", "j"].includes(e.key)) { e.preventDefault(); next(); }
+        if (["ArrowLeft", "PageUp", "h", "k"].includes(e.key)) { e.preventDefault(); prev(); }
+        if (e.key === "Home") { e.preventDefault(); first(); }
+        if (e.key === "End") { e.preventDefault(); last(); }
+      });
+
+      let touchId = null, touchX = 0, touchY = 0;
+      document.addEventListener("touchstart", e => {
+        if (e.touches.length !== 1) { touchId = null; return; }
+        const t = e.changedTouches[0];
+        touchId = t.identifier; touchX = t.clientX; touchY = t.clientY;
+      }, { passive: true });
+
+      document.addEventListener("touchend", e => {
+        if (touchId === null) return;
+        const t = Array.from(e.changedTouches).find(c => c.identifier === touchId);
+        if (!t) return;
+        const dx = t.clientX - touchX;
+        const dy = t.clientY - touchY;
+        if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.2) {
+          dx < 0 ? next() : prev();
+        } else if (Math.abs(dx) <= 12 && Math.abs(dy) <= 12) {
+          t.clientX < window.innerWidth / 2 ? prev() : next();
+        }
+        touchId = null;
+      }, { passive: true });
+
+      document.addEventListener("touchcancel", () => touchId = null, { passive: true });
+
+      syncFromHash();
+    </script>
+  </body>
+</html>
