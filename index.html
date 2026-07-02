@@ -972,7 +972,7 @@ float noise(vec2 p) {
 float fbm(vec2 p) {
   float v = 0.0;
   float a = 0.5;
-  for (int i = 0; i < 5; i++) {
+  for (int i = 0; i < 6; i++) {
     v += a * noise(p);
     p *= 2.0;
     a *= 0.5;
@@ -982,38 +982,43 @@ float fbm(vec2 p) {
 
 void main() {
   vec2 uv = gl_FragCoord.xy / iResolution.xy;
-  float t = iTime * 0.05;
+  float t = iTime * 0.015;
 
-  // warm dark base, clearly visible
-  vec3 color = vec3(0.14, 0.08, 0.045);
+  // dusty, sun-bleached palette
+  vec3 color = vec3(0.18, 0.13, 0.09);
 
-  // three drifting fbm layers
-  float n1 = fbm(uv * 1.0 + vec2(t * 0.12, -t * 0.07));
-  float n2 = fbm(uv * 1.8 - vec2(t * 0.10, t * 0.13) + 3.7);
-  float n3 = fbm(uv * 2.8 + vec2(t * 0.07, t * 0.11) + 7.2);
+  // huge, slow-moving sand/dust currents
+  vec2 p1 = uv * 1.2 + vec2(t * 0.25, t * 0.12);
+  float n1 = fbm(p1);
 
-  // broad amber wash
-  float wash1 = smoothstep(0.25, 0.75, n1);
-  color += vec3(0.78, 0.40, 0.18) * wash1 * 0.35;
+  vec2 p2 = uv * 2.4 - vec2(t * 0.18, t * 0.22) + 3.1;
+  float n2 = fbm(p2);
 
-  // teal mist
-  float wash2 = smoothstep(0.30, 0.70, n2);
-  color += vec3(0.12, 0.38, 0.40) * wash2 * 0.28;
+  vec2 p3 = uv * 4.0 + vec2(t * 0.10, -t * 0.15) + 6.4;
+  float n3 = fbm(p3);
 
-  // subtle warm secondary drift
-  float wash3 = smoothstep(0.35, 0.65, n3);
-  color += vec3(0.62, 0.30, 0.14) * wash3 * 0.18;
+  // layered haze
+  float haze1 = smoothstep(0.22, 0.78, n1) * 0.42;
+  color += vec3(0.62, 0.42, 0.24) * haze1;
 
-  // gentle horizontal scanline pulse
-  float scan = sin(uv.y * 40.0 + t * 1.2) * 0.5 + 0.5;
-  color *= 0.88 + scan * 0.12;
+  float haze2 = smoothstep(0.32, 0.68, n2) * 0.26;
+  color += vec3(0.46, 0.32, 0.18) * haze2;
 
-  // soft vignette to keep the slide foreground clear
-  float vig = 1.0 - smoothstep(0.35, 1.05, length((uv - 0.5) * 1.7));
-  color *= 0.75 + 0.25 * vig;
+  float haze3 = smoothstep(0.40, 0.60, n3) * 0.14;
+  color += vec3(0.72, 0.52, 0.30) * haze3;
 
-  // fine grain
-  color += (hash(uv * iResolution.xy + iTime) - 0.5) * 0.015;
+  // subtle hot-sun bloom drifting from upper right
+  vec2 sun = vec2(0.72 + sin(t * 0.35) * 0.06, 0.28 + cos(t * 0.27) * 0.04);
+  float sunDist = length((uv - sun) * vec2(1.0, 1.6));
+  float bloom = exp(-sunDist * 2.8) * 0.18;
+  color += vec3(1.0, 0.62, 0.30) * bloom;
+
+  // fine dust grain
+  color += (hash(uv * iResolution.xy + iTime) - 0.5) * 0.018;
+
+  // heavy vignette like looking through a visor
+  float vig = 1.0 - smoothstep(0.30, 0.95, length((uv - 0.5) * 1.7));
+  color *= 0.65 + 0.35 * vig;
 
   gl_FragColor = vec4(color, 1.0);
 }
