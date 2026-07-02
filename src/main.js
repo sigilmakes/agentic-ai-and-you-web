@@ -59,13 +59,9 @@
   resize();
 
   const start = performance.now();
-  let last = -Infinity;
-  let last = -Infinity;
 
   function render(now) {
     requestAnimationFrame(render);
-    if (now - last < 33) return;
-    last = now;
 
     gl.useProgram(program);
     gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
