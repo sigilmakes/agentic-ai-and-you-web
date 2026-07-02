@@ -972,7 +972,7 @@ float noise(vec2 p) {
 float fbm(vec2 p) {
   float v = 0.0;
   float a = 0.5;
-  for (int i = 0; i < 4; i++) {
+  for (int i = 0; i < 5; i++) {
     v += a * noise(p);
     p *= 2.0;
     a *= 0.5;
@@ -982,40 +982,38 @@ float fbm(vec2 p) {
 
 void main() {
   vec2 uv = gl_FragCoord.xy / iResolution.xy;
-  float t = iTime * 0.018;
+  float t = iTime * 0.022;
 
-  // very dark warm base
-  vec3 color = vec3(0.045, 0.028, 0.016);
+  // warm dark base, visible but not bright
+  vec3 color = vec3(0.10, 0.06, 0.035);
 
-  // slow drifting aurora-like layers
-  vec2 p1 = uv * 1.6 + vec2(t * 0.22, -t * 0.12);
-  float n1 = fbm(p1);
+  // slowly drifting soft color layers
+  float n1 = fbm(uv * 1.3 + vec2(t * 0.18, -t * 0.11));
+  float n2 = fbm(uv * 2.1 - vec2(t * 0.14, t * 0.20) + 3.7);
+  float n3 = fbm(uv * 3.3 + vec2(t * 0.09, t * 0.16) + 7.2);
 
-  vec2 p2 = uv * 2.6 - vec2(t * 0.18, t * 0.28) + 4.3;
-  float n2 = fbm(p2);
+  // broad amber wash
+  float wash1 = smoothstep(0.25, 0.75, n1);
+  color += vec3(0.75, 0.38, 0.16) * wash1 * 0.22;
 
-  vec2 p3 = uv * 3.6 + vec2(t * 0.08, t * 0.22) + 8.7;
-  float n3 = fbm(p3);
+  // teal mist
+  float wash2 = smoothstep(0.30, 0.70, n2);
+  color += vec3(0.10, 0.32, 0.34) * wash2 * 0.16;
 
-  // low-contrast, muted colour washes
-  float layer1 = smoothstep(0.32, 0.68, n1) * 0.07;
-  float layer2 = smoothstep(0.38, 0.62, n2) * 0.045;
-  float layer3 = smoothstep(0.42, 0.58, n3) * 0.025;
+  // subtle warm secondary drift
+  float wash3 = smoothstep(0.35, 0.65, n3);
+  color += vec3(0.55, 0.26, 0.12) * wash3 * 0.10;
 
-  color += vec3(0.78, 0.42, 0.22) * layer1;
-  color += vec3(0.18, 0.40, 0.42) * layer2;
-  color += vec3(0.60, 0.32, 0.18) * layer3;
+  // gentle horizontal film scanlines
+  float scan = sin(uv.y * 48.0 + t * 0.6) * 0.5 + 0.5;
+  color *= 0.92 + scan * 0.08;
 
-  // very subtle horizontal film bands
-  float bands = sin(uv.y * 38.0 + t * 0.5) * 0.5 + 0.5;
-  color -= bands * 0.012;
+  // soft vignette to keep the slide foreground clear
+  float vig = 1.0 - smoothstep(0.35, 1.05, length((uv - 0.5) * 1.7));
+  color *= 0.78 + 0.22 * vig;
 
-  // soft vignette
-  float vig = 1.0 - smoothstep(0.30, 1.0, length((uv - 0.5) * 1.8));
-  color *= 0.72 + 0.28 * vig;
-
-  // minimal grain
-  color += (hash(uv * iResolution.xy + iTime) - 0.5) * 0.008;
+  // fine grain
+  color += (hash(uv * iResolution.xy + iTime) - 0.5) * 0.012;
 
   gl_FragColor = vec4(color, 1.0);
 }
