@@ -30,7 +30,7 @@ float fbm(vec2 p) {
 
 void main() {
   vec2 uv = gl_FragCoord.xy / iResolution.xy;
-  float t = iTime * 0.015;
+  float t = iTime * 0.08;
 
   // dusty, sun-bleached palette
   vec3 color = vec3(0.18, 0.13, 0.09);
