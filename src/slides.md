@@ -161,9 +161,9 @@ class: frame-wide center
 ---
 
 <div class="three-boxes">
-  <div class="box"><p><strong>Science</strong><br/>Agents designing experiments, analysing data, and surfacing insights from literature</p></div>
-  <div class="box"><p><strong>Law</strong><br/>Contract review, case research, compliance checks, and due diligence</p></div>
-  <div class="box box-accent"><p><strong>Medicine</strong><br/>Diagnostics, clinical-trial matching, and patient-triage support</p></div>
+  <div class="box"><p><strong>Science</strong><br/>Data analysis, experiment design, literature review...</p></div>
+  <div class="box"><p><strong>Law</strong><br/>Contract review, case research, compliance checks...</p></div>
+  <div class="box box-accent"><p><strong>Medicine</strong><br/>Diagnostics, triage, ongoing care...</p></div>
 </div>
 
 ---
