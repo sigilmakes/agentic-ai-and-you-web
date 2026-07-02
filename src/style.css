@@ -411,6 +411,15 @@ li { margin: 14px 0; }
   justify-content: center;
 }
 
+.box-accent {
+  background: rgba(61, 139, 142, 0.10);
+  border-color: rgba(61, 139, 142, 0.45);
+}
+
+.box-accent p {
+  color: rgba(232, 215, 190, 0.98);
+}
+
 .box p {
   font-size: 36px;
   line-height: 1.28;
