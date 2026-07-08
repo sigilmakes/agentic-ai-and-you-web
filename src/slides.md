@@ -288,15 +288,15 @@ class: frame-wide center
 </div>
 
 ---
-layout: wide
-class: frame-wide center
+layout: split
+image: images/bureaucracy.jpg
 ---
-## Problems too big for one person to solve...
+## Coordination is hard!
 
-<div class="image-row cols-2">
-  <div class="image-cell"><img src="images/slide-23-img-104.png" alt="" /></div>
-  <div class="image-cell"><img src="images/slide-23-img-105.png" alt="" /></div>
-</div>
+- The problems we deal with in "big science" are now too big for one person to solve
+- Specialisation means people only understand "their area" and few people can see the *whole* system
+- We build teams and bureaucracies to fill the gaps, but this eventually leads to rot
+
 
 ---
 layout: default
