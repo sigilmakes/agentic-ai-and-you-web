@@ -223,7 +223,6 @@ list-class: compact two-col-bullets
 ---
 layout: split-50-50
 ---
-## Accessibility and specialisation in frontier science
 
 <div class="quote quote-large" style="margin-top: 24px;">
   <p class="step hidden" data-step="1">“Science has provided the swiftest communication between individuals”</p>
