@@ -175,7 +175,7 @@ imageStep: 2
 steps: true
 bullets:
   - When I joined in 2024, I was staunchly anti-AI
-  - Eventually, I relented in 2025 when I had to port a horrific piece of “scientist code” to GPUs
+  - Eventually, I relented in 2025 when I had 6 months to deal with some "legacy code"
   - Carried on from there, trying to use tools mindfully
   - Since December 2025, I haven’t written a single line of code and have spent almost all my time designing AI agents
   - It’s been a weird flip
