@@ -1,9 +1,20 @@
 [project]
 name = "agentic-ai-and-you-web"
 version = "0.1.0"
-description = "Add your description here"
+description = "Markdown-powered slide deck for Agentic AI And You"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "markdown-it-py>=4.2.0",
     "pyyaml>=6.0.3",
 ]
+
+[project.scripts]
+slides = "slides.cli:main"
+
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["slides"]

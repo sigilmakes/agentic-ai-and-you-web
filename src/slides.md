@@ -1,49 +1,76 @@
 ---
-slide: 1
-type: title
-eyebrow: Agentic AI And You
-title: Why Human Collaboration Is More Important Than Ever
-subtitle: Willow Sparks
+layout: title
+deck:
+  title: Agentic AI And You
+  footer-left: Willow Sparks
+  footer-right: Agentic AI And You
 ---
+<p class="eyebrow">Agentic AI And You</p>
+
+# Why Human Collaboration Is More Important Than Ever
+
+<p class="subtitle">Willow Sparks</p>
 
 ---
-slide: 2
-type: split
-title: Who am I?
+layout: split
 image: images/slide-2-img-19.png
-bullets:
-  - Scientific Computing Graduate since 2024 (nearly finished!) at Daresbury Labs
-  - Joined after finishing my MPhys at Lancaster University
-  - text: "Worked on various different cool projects in different groups in SCD, e.g.:"
-    items:
-      - DFT Processing Tools
-      - Monte-Carlo Simulators
-      - Cryo-EM Compression Tools
-      - and more!
 ---
+## Who am I?
+
+- Scientific Computing Graduate since 2024 (nearly finished!) at Daresbury Labs
+- Joined after finishing my MPhys at Lancaster University
+- Worked on various different cool projects in different groups in SCD, e.g.:
+  - DFT Processing Tools
+  - Monte-Carlo Simulators
+  - Cryo-EM Compression Tools
+  - and more!
 
 ---
-slide: 3
-type: split
-title: AI Agents
+layout: split
 image: images/slide-3-img-22.png
-bullets:
-  - This year, I’ve been spending most of my time working with AI and building AI agents.
-  - It’s been a really weird year!
-  - Rather than focusing on the technical stuff, I’d like to discuss how will this affect collaboration
 ---
+## AI Agents
+
+- This year, I’ve been spending most of my time working with AI and building AI agents.
+- It’s been a really weird year!
+- Rather than focusing on the technical stuff, I’d like to discuss how will this affect collaboration
 
 ---
-slide: 4
-type: flowchart
----
-
----
-slide: 5
-type: default
-title: What can agents help with?
+layout: wide
 class: frame-wide
 ---
+## What is an agent?
+
+<div class="agent-flowchart">
+  <div class="flow-row">
+    <div class="flow-node image-node step hidden" data-step="1">
+      <img src="images/slide-4-img-24.png" alt="" />
+      <span class="flow-label">An LLM (ChatGPT, Claude etc)</span>
+    </div>
+    <div class="flow-node image-node step hidden" data-step="2">
+      <img src="images/slide-4-img-25.png" alt="" />
+      <span class="flow-label">“Tools” (Bash, File I/O, Search etc)</span>
+    </div>
+  </div>
+  <div class="step hidden" data-step="3">
+    <div class="flow-path">
+      <div class="flow-step">Start with goal</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">Think + Use tools</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step query">Goal achieved?</div>
+      <div class="flow-arrow down">↓</div>
+      <div class="flow-step stop">Stop</div>
+    </div>
+    <div class="flow-loop">and a loop!</div>
+  </div>
+</div>
+
+---
+layout: default
+class: frame-wide
+---
+## What can agents help with?
 
 <p class="big-text" style="margin-top: 18px; color: var(--accent);">Basically everything!</p>
 
@@ -58,21 +85,19 @@ class: frame-wide
 </ul>
 
 ---
-slide: 6
-type: statement
-title: Vibe coding….
+layout: statement
 ---
+## Vibe coding….
 
 <div class="slide-insert-wrap">
   <img src="images/slide-6-img-40.png" alt="" class="slide-content-image" style="max-height: 620px;" />
 </div>
 
 ---
-slide: 7
-type: wide
-title: Software development is getting weird
+layout: wide
 class: frame-wide center
 ---
+## Software development is getting weird
 
 <div class="logo-strip logo-strip-large">
   <div class="logo-cell"><img src="images/slide-7-img-42.png" alt="" /></div>
@@ -84,54 +109,48 @@ class: frame-wide center
 </div>
 
 ---
-slide: 8
-type: split
-title: Some statistics - GitHub
+layout: split
 image: images/slide-8-img-50.png
-bullets:
-  - There were ~1 billion commits to github in 2025. In April it reached 275 million per week
-  - In February, around 4% of all commits were written by Claude Code.
 ---
+## Some statistics - GitHub
+
+- There were ~1 billion commits to github in 2025. In April it reached 275 million per week
+- In February, around 4% of all commits were written by Claude Code.
 
 <p class="small" style="margin-top: 20px;">(Source: GitHub)</p>
 
 ---
-slide: 9
-type: statement
-title: Some statistics - METR
+layout: statement
 ---
+## Some statistics - METR
 
 <div class="slide-insert-wrap">
   <img src="images/slide-9-img-52.png" alt="" class="slide-content-image" style="max-height: 680px;" />
 </div>
 
 ---
-slide: 10
-type: statement
-title: In early 2025, METR reported AI tools largely slowed people down?
-titleStyle: "max-width: 1200px;"
+layout: statement
 ---
+<h2 style="max-width: 1200px;">In early 2025, METR reported AI tools largely slowed people down?</h2>
 
 <div class="slide-insert-wrap">
   <img src="images/slide-10-img-54.png" alt="" class="slide-content-image" style="max-height: 580px;" />
 </div>
 
 ---
-slide: 11
-type: statement
-title: Then those results were declared outdated this year...
+layout: statement
 ---
+## Then those results were declared outdated this year...
 
 <div class="slide-insert-wrap">
   <img src="images/slide-11-img-56.png" alt="" class="slide-content-image" style="max-height: 620px;" />
 </div>
 
 ---
-slide: 12
-type: wide
-title: Productivity is up! But...
+layout: wide
 class: frame-wide center
 ---
+## Productivity is up! But...
 
 <div class="image-row cols-3">
   <div class="image-cell"><img src="images/slide-12-img-58.png" alt="" /></div>
@@ -140,11 +159,10 @@ class: frame-wide center
 </div>
 
 ---
-slide: 13
-type: wide
-title: AI is *divisive*
+layout: wide
 class: frame-wide center
 ---
+## AI is *divisive*
 
 <div class="image-row cols-4">
   <div class="image-cell"><img src="images/slide-13-img-62.png" alt="" /></div>
@@ -154,11 +172,10 @@ class: frame-wide center
 </div>
 
 ---
-slide: 14
-type: wide
-title: Agents are spreading beyond software
+layout: wide
 class: frame-wide center
 ---
+## Agents are spreading beyond software
 
 <div class="three-boxes">
   <div class="box"><p><strong>Science</strong><br/>Data analysis, experiment design, literature review...</p></div>
@@ -167,48 +184,44 @@ class: frame-wide center
 </div>
 
 ---
-slide: 15
-type: split
-title: Personal Experience
+layout: split
 image: images/slide-15-img-72.png
-imageStep: 2
+image-step: 2
 steps: true
-bullets:
-  - When I joined in 2024, I was staunchly anti-AI
-  - Eventually, I relented in 2025 when I had 6 months to deal with some "legacy code"
-  - Carried on from there, trying to use tools mindfully
-  - Since December 2025, I haven’t written a single line of code and have spent almost all my time designing AI agents
-  - It’s been a weird flip
 ---
+## Personal Experience
+
+- When I joined in 2024, I was staunchly anti-AI
+- Eventually, I relented in 2025 when I had 6 months to deal with some "legacy code"
+- Carried on from there, trying to use tools mindfully
+- Since December 2025, I haven’t written a single line of code and have spent almost all my time designing AI agents
+- It’s been a weird flip
 
 ---
-slide: 16
-type: statement
-eyebrow: Part I
-title: How did we get here, and why?
+layout: statement
 ---
+<p class="eyebrow">Part I</p>
+
+## How did we get here, and why?
 
 ---
-slide: 17
-type: default
-title: "Raise your hand if you know the following:"
+layout: default
 class: frame-wide
 steps: true
-listClass: compact two-col-bullets
-bullets:
-  - How to write a python script?
-  - How to use git?
-  - How to write GPU kernels?
-  - How the Haber process works?
-  - What AdS/CFT correspondence is and why it matters?
-  - How to design an mRNA vaccine to fight against a global pandemic?
-  - How to calculate magnetic susceptibility bandstructures using ab-initio methods?
+list-class: compact two-col-bullets
 ---
+## Raise your hand if you know the following:
+
+- How to write a python script?
+- How to use git?
+- How to write GPU kernels?
+- How the Haber process works?
+- What AdS/CFT correspondence is and why it matters?
+- How to design an mRNA vaccine to fight against a global pandemic?
+- How to calculate magnetic susceptibility bandstructures using ab-initio methods?
 
 ---
-slide: 18
-type: split-50-50
-title: Accessibility and specialisation in frontier science
+layout: split-50-50
 ---
 
 <div class="quote quote-large" style="margin-top: 24px;">
@@ -222,10 +235,9 @@ title: Accessibility and specialisation in frontier science
 <img src="images/slide-18-img-79.png" alt="" class="panel-image step hidden" data-step="3" />
 
 ---
-slide: 19
-type: default
-title: Specialisation
+layout: default
 ---
+## Specialisation
 
 <div class="three-boxes">
   <div class="box"><p>The world is highly specialised, and this has brought many benefits</p></div>
@@ -234,11 +246,10 @@ title: Specialisation
 </div>
 
 ---
-slide: 20
-type: wide
-title: "Computers: Intelligence Augmentation"
+layout: wide
 class: frame-wide center
 ---
+## Computers: Intelligence Augmentation
 
 <div class="image-row cols-2">
   <div class="image-wrap">
@@ -252,24 +263,22 @@ class: frame-wide center
 </div>
 
 ---
-slide: 21
-type: split
-title: Computers enable collaboration
+layout: split
 image: images/slide-21-img-97.png
-imageGlow: true
-bullets:
-  - Instant communication with everyone around the world
-  - Instant access to all the world’s knowledge and learning resources
-  - Automation of large scale numerical calculations far beyond human scale
-  - and more!
+image-glow: true
 ---
+## Computers enable collaboration
+
+- Instant communication with everyone around the world
+- Instant access to all the world’s knowledge and learning resources
+- Automation of large scale numerical calculations far beyond human scale
+- and more!
 
 ---
-slide: 22
-type: wide
-title: But the world keeps getting more complex...
+layout: wide
 class: frame-wide center
 ---
+## But the world keeps getting more complex...
 
 <div class="complexity-stack">
   <img src="images/slide-22-img-99.png" alt="" class="complexity-layer step hidden" data-rot="-6" />
@@ -279,22 +288,20 @@ class: frame-wide center
 </div>
 
 ---
-slide: 23
-type: wide
-title: Problems too big for one person to solve...
-class: frame-wide center
+layout: split
+image: images/bureaucracy.jpg
 ---
+## Coordination is hard!
 
-<div class="image-row cols-2">
-  <div class="image-cell"><img src="images/slide-23-img-104.png" alt="" /></div>
-  <div class="image-cell"><img src="images/slide-23-img-105.png" alt="" /></div>
-</div>
+- The problems we deal with in "big science" are now too big for one person to solve
+- Specialisation means people only understand "their area" and few people can see the *whole* system
+- We build teams and bureaucracies to fill the gaps, but this eventually leads to rot
+
 
 ---
-slide: 24
-type: default
-title: Specialisation
+layout: default
 ---
+## Specialisation
 
 <div class="three-boxes">
   <div class="box"><p>The world is highly specialised, and this has brought many benefits</p></div>
@@ -303,103 +310,93 @@ title: Specialisation
 </div>
 
 ---
-slide: 25
-type: statement
-eyebrow: Part II
-title: What impact do agents have?
+layout: statement
 ---
+<p class="eyebrow">Part II</p>
+
+## What impact do agents have?
 
 <p class="quote quote-large" style="margin-top: 40px;">Do agents make this problem better or worse?</p>
 
 ---
-slide: 26
-type: statement
-title: Software Development
-subtitle: "Feels like this:"
+layout: statement
 ---
+## Software Development
+
+<p class="subtitle">Feels like this:</p>
 
 <div class="slide-insert-wrap">
   <img src="images/slide-26-img-116.png" alt="" class="slide-content-image" style="max-height: 620px;" />
 </div>
 
 ---
-slide: 27
-type: default
-title: It’s never been easier...
+layout: default
 steps: true
-bullets:
-  - To make software!
-  - To make software with less experience!
-  - To *think* you made software with less experience…
-  - To spam open-source projects with broken code...
 ---
+## It’s never been easier...
+
+- To make software!
+- To make software with less experience!
+- To *think* you made software with less experience…
+- To spam open-source projects with broken code...
 
 ---
-slide: 28
-type: split
-title: Personal Experience - Myself
+layout: split
 image: images/slide-28-img-121.png
-bullets:
-  - At this point, I don’t write any code
-  - text: ">It’s fun, and I’m a better engineer for it!"
-    step: 1
-  - text: ">It’s also been a really good learning tool, because I still make effort to learn."
-    step: 2
-  - text: ">But this all only works because I know how software development works"
-    step: 3
-  - text: ">Software was so easy for AI to “automate” because software is verifiable."
-    step: 4
-  - text: ">This is not “a normal jump in abstraction”"
-    step: 5
 ---
+## Personal Experience - Myself
+
+<ul class="dense">
+  <li>At this point, I don’t write any code</li>
+  <li class="step hidden" data-step="1">It’s fun, and I’m a better engineer for it!</li>
+  <li class="step hidden" data-step="2">It’s also been a really good learning tool, because I still make effort to learn.</li>
+  <li class="step hidden" data-step="3">But this all only works because I know how software development works</li>
+  <li class="step hidden" data-step="4">Software was so easy for AI to “automate” because software is verifiable.</li>
+  <li class="step hidden" data-step="5">This is not “a normal jump in abstraction”</li>
+</ul>
 
 ---
-slide: 29
-type: split
-title: Teamwork
+layout: split
 image: images/slide-29-img-124.png
-imageCaption: Obligatory “stock photo with watermark spam”
+image-caption: Obligatory “stock photo with watermark spam”
 steps: true
-bullets:
-  - AI reduces barriers for collaboration
-  - Makes it easier to centralise, share and standardise information
-  - Helps translate between specialist “languages” so different disciplines can actually talk to each other
 ---
+## Teamwork
+
+- AI reduces barriers for collaboration
+- Makes it easier to centralise, share and standardise information
+- Helps translate between specialist “languages” so different disciplines can actually talk to each other
 
 ---
-slide: 30
-type: split
-title: Slop Cannons
+layout: split
 image: images/slide-30-img-128.png
-imageStep: 3
+image-step: 3
 steps: true
-bullets:
-  - Rolling out AI tools with no training is terrible
-  - It’s too easy to trust AI if you don’t understand what it’s done
-  - Laziness with AI is infinitely worse than laziness without AI
 ---
+## Slop Cannons
+
+- Rolling out AI tools with no training is terrible
+- It’s too easy to trust AI if you don’t understand what it’s done
+- Laziness with AI is infinitely worse than laziness without AI
 
 ---
-slide: 31
-type: title
-title: Expertise is still needed!
+layout: title
 ---
+# Expertise is still needed!
 
 ---
-slide: 32
-type: default
-title: Some closing thoughts
+layout: default
 steps: true
-bullets:
-  - Agentic AI is one of the most powerful tools we have for breaking through complexity, and the limits really are your imagination.
-  - But blindly trusting AI does *not* work, and is a real danger
-  - This problem isn’t solved by ignoring AI
-  - Even if AI could “do everything” it would still be more important to learn how things work
-  - Expertise from other people outside your discipline is *vital*
 ---
+## Some closing thoughts
+
+- Agentic AI is one of the most powerful tools we have for breaking through complexity, and the limits really are your imagination.
+- But blindly trusting AI does *not* work, and is a real danger
+- This problem isn’t solved by ignoring AI
+- Even if AI could “do everything” it would still be more important to learn how things work
+- Expertise from other people outside your discipline is *vital*
 
 ---
-slide: 33
-type: title
-title: Thanks for listening!
+layout: title
 ---
+# Thanks for listening!
