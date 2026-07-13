@@ -19,21 +19,19 @@ image: images/slide-2-img-19.png
 
 - Scientific Computing Graduate since 2024 (nearly finished!) at Daresbury Labs
 - Joined after finishing my MPhys at Lancaster University
-- Worked on various different cool projects in different groups in SCD, e.g.:
-  - DFT Processing Tools
-  - Monte-Carlo Simulators
-  - Cryo-EM Compression Tools
-  - and more!
+- Worked on various different cool projects in different groups in SCD, but I'm not talking about those today
 
 ---
 layout: split
 image: images/slide-3-img-22.png
+steps: true
 ---
 ## AI Agents
 
 - This year, I’ve been spending most of my time working with AI and building AI agents.
 - It’s been a really weird year!
 - Rather than focusing on the technical stuff, I’d like to discuss how will this affect collaboration
+- My core feeling is that it's all about what we *choose* to do with it, and we can make the right choice.
 
 ---
 layout: wide
@@ -59,7 +57,7 @@ class: frame-wide
       <div class="flow-step">Think + Use tools</div>
       <div class="flow-arrow">→</div>
       <div class="flow-step query">Goal achieved?</div>
-      <div class="flow-arrow down">↓</div>
+      <div class="flow-arrow">→</div>
       <div class="flow-step stop">Stop</div>
     </div>
     <div class="flow-loop">and a loop!</div>
@@ -115,7 +113,7 @@ image: images/slide-8-img-50.png
 ## Some statistics - GitHub
 
 - There were ~1 billion commits to github in 2025. In April it reached 275 million per week
-- In February, around 4% of all commits were written by Claude Code.
+- In February, around 4% of all commits were written by Claude Code (which is only one tool)
 
 <p class="small" style="margin-top: 20px;">(Source: GitHub)</p>
 
@@ -184,6 +182,20 @@ class: frame-wide center
 </div>
 
 ---
+layout: default
+steps: true
+---
+## How does this make you feel?
+
+- "Wow! I can get so much more done!"
+- "We're all doomed! Help!"
+- "It's all going to blow over when the bubble pops..."
+- There's probably people thinking 'I can fire all my staff, yay!'
+- In 6 months those people will think 'Oh god, why did I fire all my staff? Everything is broken!'
+
+- *"Ah, we're doing this again"*
+
+---
 layout: split
 image: images/slide-15-img-72.png
 image-step: 2
@@ -194,8 +206,8 @@ steps: true
 - When I joined in 2024, I was staunchly anti-AI
 - Eventually, I relented in 2025 when I had 6 months to deal with some "legacy code"
 - Carried on from there, trying to use tools mindfully
-- Since December 2025, I haven’t written a single line of code and have spent almost all my time designing AI agents
-- It’s been a weird flip
+- By December 2025, the capabilities reached the point that I felt it no longer made sense to write code myself.
+- ...which is a very strange feeling
 
 ---
 layout: statement
@@ -203,22 +215,6 @@ layout: statement
 <p class="eyebrow">Part I</p>
 
 ## How did we get here, and why?
-
----
-layout: default
-class: frame-wide
-steps: true
-list-class: compact two-col-bullets
----
-## Raise your hand if you know the following:
-
-- How to write a python script?
-- How to use git?
-- How to write GPU kernels?
-- How the Haber process works?
-- What AdS/CFT correspondence is and why it matters?
-- How to design an mRNA vaccine to fight against a global pandemic?
-- How to calculate magnetic susceptibility bandstructures using ab-initio methods?
 
 ---
 layout: split-50-50
@@ -344,15 +340,15 @@ steps: true
 layout: split
 image: images/slide-28-img-121.png
 ---
-## Personal Experience - Myself
+
+## Myself
 
 <ul class="dense">
   <li>At this point, I don’t write any code</li>
   <li class="step hidden" data-step="1">It’s fun, and I’m a better engineer for it!</li>
   <li class="step hidden" data-step="2">It’s also been a really good learning tool, because I still make effort to learn.</li>
   <li class="step hidden" data-step="3">But this all only works because I know how software development works</li>
-  <li class="step hidden" data-step="4">Software was so easy for AI to “automate” because software is verifiable.</li>
-  <li class="step hidden" data-step="5">This is not “a normal jump in abstraction”</li>
+  <li class="step hidden" data-step="4">This is not “a normal jump in abstraction”</li>
 </ul>
 
 ---
@@ -363,26 +359,46 @@ steps: true
 ---
 ## Teamwork
 
-- AI reduces barriers for collaboration
-- Makes it easier to centralise, share and standardise information
+- AI *can* reduce barriers for collaboration.
+- Makes it easier to centralise, share and standardise information.
 - Helps translate between specialist “languages” so different disciplines can actually talk to each other
 
 ---
 layout: split
 image: images/slide-30-img-128.png
-image-step: 3
+image-step: 2
 steps: true
 ---
 ## Slop Cannons
 
-- Rolling out AI tools with no training is terrible
 - It’s too easy to trust AI if you don’t understand what it’s done
+- *This then puts a burden on the other people you work with*
 - Laziness with AI is infinitely worse than laziness without AI
+
+
+---
+layout: default
+steps: true
+---
+
+## This isn't actually about AI
+
+- This is about how we *work with each other.*
+- Rejecting collaboration will always lead to worse outcomes.
+- We can choose to use and build technology in a way that promotes collaboration.
+    - *Lowering barriers to entry or filtering out people?*
+    - *Navigating complex pipelines or building arcane monstrosities*
+    - *Open source or locking things down?*
+- **This is true of any technology.**
 
 ---
 layout: title
 ---
-# Expertise is still needed!
+## Expertise is still needed!
+
+## *People* are still needed
+
+
 
 ---
 layout: default
@@ -391,10 +407,9 @@ steps: true
 ## Some closing thoughts
 
 - Agentic AI is one of the most powerful tools we have for breaking through complexity, and the limits really are your imagination.
-- But blindly trusting AI does *not* work, and is a real danger
-- This problem isn’t solved by ignoring AI
-- Even if AI could “do everything” it would still be more important to learn how things work
-- Expertise from other people outside your discipline is *vital*
+- But blindly trusting AI does *not* work, and is a real danger.
+- This problem isn’t solved by ignoring AI.
+- Keeping your feet on the ground and being *human* will.
 
 ---
 layout: title
