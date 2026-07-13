@@ -1287,21 +1287,27 @@ float fbm(vec2 p) {
 // A sheet of airborne sand stretched along the wind direction. Time only
 // advances in one direction: none of the layers reverse or pulse in place.
 float sandVeil(vec2 p, float t, float scale, float speed, float seed) {
-  vec2 windDir = normalize(vec2(1.0, 0.14));
+  // Each altitude has a slightly different crosswind, breaking up the rigid
+  // parallel motion while preserving the storm's dominant direction.
+  float slope = 0.11 + 0.035 * sin(seed * 1.91);
+  vec2 windDir = normalize(vec2(1.0, slope));
   vec2 windNormal = vec2(-windDir.y, windDir.x);
   float along = dot(p, windDir);
   float across = dot(p, windNormal);
 
-  float bend = fbm(vec2(along * 0.45 - t * speed * 0.18,
+  // The sine changes velocity, not direction. Its derivative is always smaller
+  // than the base speed, so the sand surges and lulls but never reverses.
+  float travel = t * speed + 0.06 * sin(t * 0.23 + seed * 1.7);
+  float bend = fbm(vec2(along * 0.45 - travel * 0.18,
                         across * 2.0 + seed));
   vec2 samplePoint = vec2(
-    (along - t * speed + bend * 0.30) * scale,
+    (along - travel + bend * 0.30) * scale,
     (across + (bend - 0.5) * 0.08) * scale * 8.0
   );
 
   float body = fbm(samplePoint + vec2(seed * 7.3, seed * 2.1));
   float detail = fbm(samplePoint * vec2(1.7, 2.4)
-                   + vec2(-t * speed * 0.45, seed * 11.0));
+                   + vec2(-travel * 0.45, seed * 11.0));
   body = mix(body, detail, 0.28);
 
   return smoothstep(0.43, 0.73, body);
@@ -1309,6 +1315,25 @@ float sandVeil(vec2 p, float t, float scale, float speed, float seed) {
 
 float duneNoise(float x, float seed) {
   return fbm(vec2(x, seed));
+}
+
+// Mineral-teal weather that slowly arrives across the whole storm, peaks, and
+// recedes to amber again. One cycle lasts roughly seventy seconds.
+float tealWeather(vec2 uv, float t) {
+  float slow = t * 0.025;
+  float fold = fbm(vec2(uv.x * 1.25 - slow * 0.25,
+                        uv.y * 1.9 + slow * 0.08));
+  float texture = 0.5 + 0.5 * sin(
+      uv.x * 5.0 + uv.y * 2.2 + fold * 4.0 - slow);
+  texture = 0.48 + 0.52 * smoothstep(0.12, 0.88, texture);
+
+  // Keep a little more color in the sky and airborne dust than on the ground.
+  float atmosphere = smoothstep(0.10, 0.46, uv.y);
+  atmosphere *= 1.0 - 0.22 * smoothstep(0.84, 1.0, uv.y);
+
+  float cycle = 0.5 + 0.5 * sin(t * 0.09);
+  float presence = smoothstep(0.20, 0.86, cycle);
+  return clamp(presence * atmosphere * texture, 0.0, 1.0);
 }
 
 void main() {
@@ -1335,8 +1360,9 @@ void main() {
 
   vec3 rustDust = vec3(0.53, 0.245, 0.075);
   vec3 goldDust = vec3(0.93, 0.585, 0.245);
+  float warmPhase = 0.92 + 0.08 * sin(t * 0.13 + uv.x * 1.9);
   color += rustDust * farVeil * 0.24;
-  color += goldDust * midVeil * 0.28;
+  color += goldDust * midVeil * 0.28 * warmPhase;
   color += vec3(1.0, 0.70, 0.34) * nearVeil * groundLift * 0.25;
 
   // A few long, translucent wind lanes cut through the larger veils.
@@ -1350,8 +1376,20 @@ void main() {
   lanes = smoothstep(0.58, 0.78, lanes) * (0.35 + 0.65 * groundLift);
   color += vec3(0.92, 0.56, 0.22) * lanes * 0.22;
 
+  // The entire atmosphere gradually turns mineral-teal and then clears, rather
+  // than carrying a permanent colored band across the frame.
+  float tealArrival = tealWeather(uv, t);
+  float tealDust = tealArrival * (0.78 + 0.22 * farVeil);
+  vec3 tealBody = vec3(0.075, 0.43, 0.41);
+  vec3 tealLight = vec3(0.20, 0.68, 0.62);
+  color = mix(color, tealBody, tealDust * 0.30);
+  color += tealLight * tealDust * (0.09 + 0.08 * midVeil);
+
   // A hard sun seen through the storm, kept off-center behind the slide content.
-  vec2 sunPosition = vec2(0.80, 0.67);
+  vec2 sunPosition = vec2(
+    0.80 + 0.012 * sin(t * 0.07),
+    0.67 + 0.008 * sin(t * 0.05 + 1.6)
+  );
   vec2 sunDelta = (uv - sunPosition) * vec2(aspect, 1.0);
   float sunDistance = length(sunDelta);
   float sunDisc = 1.0 - smoothstep(0.020, 0.037, sunDistance);
@@ -1388,6 +1426,11 @@ void main() {
 
   // Let airborne sand softly veil the dune edges.
   color += vec3(0.58, 0.27, 0.075) * airborne * groundLift * 0.10;
+
+  // Slow chromatic weather: warm and cool tones pass across the frame without
+  // changing the density or direction of the storm itself.
+  color.r += 0.018 * sin(t * 0.14 + uv.y * 3.0);
+  color.b += 0.014 * cos(t * 0.11 + uv.x * 2.5);
 
   // Keep the center legible, darken the far edges, and preserve warm highlights.
   float vignette = 1.0 - smoothstep(0.35, 0.98,
