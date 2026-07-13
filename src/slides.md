@@ -295,7 +295,7 @@ image: images/bureaucracy.jpg
 
 - The problems we deal with in "big science" are now too big for one person to solve
 - Specialisation means people only understand "their area" and few people can see the *whole* system
-- We build teams and bureaucracies to fill the gaps, but this eventually leads to rot
+- In the worst case we end up with silos, obscure pipelines, duplicated work and cliques
 
 
 ---
