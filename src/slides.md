@@ -187,7 +187,7 @@ steps: true
 ---
 ## How does this make you feel?
 
-- "Wow! I can get so much more done!"
+- "Wow! I can do so much cool stuff now!"
 - "We're all doomed! Help!"
 - "It's all going to blow over when the bubble pops..."
 - There's probably people thinking 'I can fire all my staff, yay!'
@@ -408,7 +408,7 @@ steps: true
 
 - Agentic AI is one of the most powerful tools we have for breaking through complexity, and the limits really are your imagination.
 - But blindly trusting AI does *not* work, and is a real danger.
-- This problem isn’t solved by ignoring it.
+- This problem isn’t solved by ignoring it.#
 - Keeping your feet on the ground and being *human* will.
 
 ---
