@@ -408,8 +408,8 @@ steps: true
 
 - Agentic AI is one of the most powerful tools we have for breaking through complexity, and the limits really are your imagination.
 - But blindly trusting AI does *not* work, and is a real danger.
-- This problem isn’t solved by ignoring it.
 - Keeping your feet on the ground and being *human* will.
+- Push others around you to do things better.
 
 ---
 layout: title
